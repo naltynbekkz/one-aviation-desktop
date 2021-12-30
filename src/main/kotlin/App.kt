@@ -8,6 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.arkivanov.decompose.DefaultComponentContext
@@ -28,13 +29,13 @@ import java.util.prefs.Preferences
 @OptIn(ExperimentalDecomposeApi::class)
 fun main() {
 
-    val input = FileInputStream("apikey.properties")
-    val properties = Properties()
-    properties.load(input)
-    val apiKey = properties["ZAPIS_API_KEY"] as String
+//    val input = FileInputStream("apikey.properties")
+//    val properties = Properties()
+//    properties.load(input)
+//    val apiKey = properties["ZAPIS_API_KEY"] as String
 
     val settingsProviderImpl = SettingsProviderImpl(Preferences.userRoot().node("one-aviation.prefs"))
-    val repositoryProviderImpl = RepositoryProviderImpl(apiKey, 1, settingsProviderImpl.get())
+    val repositoryProviderImpl = RepositoryProviderImpl("", 1, settingsProviderImpl.get())
 
     val lifecycle = LifecycleRegistry()
     val root = RootComponentImpl(
@@ -56,7 +57,7 @@ fun main() {
             LocalScrollbarStyle provides defaultScrollbarStyle(),
         ) {
 
-            val windowState = rememberWindowState()
+            val windowState = rememberWindowState(WindowPlacement.Fullscreen)
             LifecycleController(lifecycle, windowState)
 
             Window(

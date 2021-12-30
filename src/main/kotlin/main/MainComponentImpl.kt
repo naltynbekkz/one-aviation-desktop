@@ -11,6 +11,7 @@ import core.Component
 import development.InDevelopmentComponent
 import main.home.HomeComponentImpl
 import main.profile.ProfileComponentImpl
+import main.settings.SettingsComponentImpl
 import network.RepositoryProvider
 import settings.SettingsProvider
 import settings.get
@@ -33,8 +34,9 @@ class MainComponentImpl(
 
     private fun resolveChild(mainDestination: MainDestination, componentContext: ComponentContext): Component =
         when (mainDestination) {
-            MainDestination.Home -> HomeComponentImpl(componentContext, settingsProvider.get())
+            MainDestination.Home -> HomeComponentImpl(componentContext)
             MainDestination.Profile -> ProfileComponentImpl(componentContext, settingsProvider.get())
+            MainDestination.Settings -> SettingsComponentImpl(componentContext, settingsProvider.get())
             else -> InDevelopmentComponent(componentContext)
         }
 

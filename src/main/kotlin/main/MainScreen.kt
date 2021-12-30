@@ -27,6 +27,8 @@ import main.home.HomeComponent
 import main.home.HomeScreen
 import main.profile.ProfileComponent
 import main.profile.ProfileScreen
+import main.settings.SettingsComponent
+import main.settings.SettingsScreen
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
@@ -86,6 +88,7 @@ fun MainScreen(mainComponent: MainComponent) {
             Children(routerState = routerState, animation = crossfadeScale()) {
                 when (val child = it.instance) {
                     is InDevelopment -> InDevelopmentScreen(child)
+                    is SettingsComponent -> SettingsScreen(child)
                     is HomeComponent -> HomeScreen(child)
                     is ProfileComponent -> ProfileScreen(child)
                     else -> error("shouldn't be happening")

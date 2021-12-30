@@ -27,7 +27,7 @@ class RootComponentImpl(
         handleBackButton = true,
         childFactory = ::resolveChild
     )
-    override val routerState: Value<RouterState<RootDestination, Any>> = router.state
+    override val routerState: Value<RouterState<RootDestination, Component>> = router.state
 
     private fun resolveChild(mainDestination: RootDestination, componentContext: ComponentContext): Component =
         when (mainDestination) {
