@@ -24,7 +24,7 @@ class SessionManager(
     }
 
     private suspend fun clearToken() {
-        httpClient[Auth].providers.filterIsInstance<BearerAuthProvider>().first().clearToken()
+        httpClient.plugin(Auth).providers.filterIsInstance<BearerAuthProvider>().first().clearToken()
     }
 
 }

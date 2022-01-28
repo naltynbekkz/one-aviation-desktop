@@ -39,7 +39,7 @@ fun OneAviationTheme(
         onBackground = onBackground,
         onSurface = onSurface,
         onError = onError,
-        isLight = true,
+        isLight = !darkTheme,
     )
 
     MaterialTheme(

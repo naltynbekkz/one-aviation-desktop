@@ -29,13 +29,20 @@ import java.util.prefs.Preferences
 @OptIn(ExperimentalDecomposeApi::class)
 fun main() {
 
-//    val input = FileInputStream("apikey.properties")
-//    val properties = Properties()
-//    properties.load(input)
-//    val apiKey = properties["ZAPIS_API_KEY"] as String
+    val properties = Properties()
+
+    try {
+        val input = FileInputStream("apikey.properties")
+        properties.load(input)
+    } catch (e: Exception) {
+        println("No such file: apikey.properties")
+    }
+
+    val apiKey: String = properties["ZAPIS_API_KEY"] as String? ?: ""
+
 
     val settingsProviderImpl = SettingsProviderImpl(Preferences.userRoot().node("one-aviation.prefs"))
-    val repositoryProviderImpl = RepositoryProviderImpl("", 1, settingsProviderImpl.get())
+    val repositoryProviderImpl = RepositoryProviderImpl(apiKey, 1, settingsProviderImpl.get())
 
     val lifecycle = LifecycleRegistry()
     val root = RootComponentImpl(
