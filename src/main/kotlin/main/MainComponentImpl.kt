@@ -10,6 +10,7 @@ import com.arkivanov.decompose.value.Value
 import core.Component
 import development.InDevelopmentComponent
 import main.home.HomeComponentImpl
+import main.logs.LogsComponentImpl
 import main.profile.ProfileComponentImpl
 import main.settings.SettingsComponentImpl
 import network.RepositoryProvider
@@ -35,6 +36,7 @@ class MainComponentImpl(
     private fun resolveChild(mainDestination: MainDestination, componentContext: ComponentContext): Component =
         when (mainDestination) {
             MainDestination.Home -> HomeComponentImpl(componentContext)
+            MainDestination.Logs -> LogsComponentImpl(componentContext)
             MainDestination.Profile -> ProfileComponentImpl(componentContext, settingsProvider.get())
             MainDestination.Settings -> SettingsComponentImpl(componentContext, settingsProvider.get())
             else -> InDevelopmentComponent(componentContext)

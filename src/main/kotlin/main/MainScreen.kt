@@ -22,6 +22,8 @@ import development.InDevelopment
 import development.InDevelopmentScreen
 import main.home.HomeComponent
 import main.home.HomeScreen
+import main.logs.LogsComponent
+import main.logs.LogsScreen
 import main.profile.ProfileComponent
 import main.profile.ProfileScreen
 import main.settings.SettingsComponent
@@ -90,6 +92,7 @@ fun MainScreen(mainComponent: MainComponent) {
                     is InDevelopment -> InDevelopmentScreen(child)
                     is SettingsComponent -> SettingsScreen(child)
                     is HomeComponent -> HomeScreen(child)
+                    is LogsComponent -> LogsScreen(child)
                     is ProfileComponent -> ProfileScreen(child)
                     else -> error("shouldn't be happening")
                 }
