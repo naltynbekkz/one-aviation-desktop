@@ -37,7 +37,7 @@ class MainComponentImpl(
         when (mainDestination) {
             MainDestination.Home -> HomeComponentImpl(componentContext)
             MainDestination.Logs -> LogsComponentImpl(componentContext)
-            MainDestination.Profile -> ProfileComponentImpl(componentContext, settingsProvider.get())
+            MainDestination.Profile -> ProfileComponentImpl(componentContext, settingsProvider)
             MainDestination.Settings -> SettingsComponentImpl(componentContext, settingsProvider.get())
             else -> InDevelopmentComponent(componentContext)
         }

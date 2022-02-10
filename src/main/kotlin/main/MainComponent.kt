@@ -4,7 +4,7 @@ import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.value.Value
 import core.Component
 
-interface MainComponent: Component {
+interface MainComponent : Component {
 
     val destinations: Value<List<MainDestination>>
 
