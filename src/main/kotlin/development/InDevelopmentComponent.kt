@@ -1,7 +1,5 @@
 package development
 
-import com.arkivanov.decompose.ComponentContext
+import core.Component
 
-class InDevelopmentComponent(
-    componentContext: ComponentContext,
-) : InDevelopment, ComponentContext by componentContext
+interface InDevelopmentComponent : Component

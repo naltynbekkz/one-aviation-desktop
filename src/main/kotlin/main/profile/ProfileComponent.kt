@@ -1,14 +1,10 @@
 package main.profile
 
-import com.arkivanov.decompose.router.RouterState
-import com.arkivanov.decompose.value.Value
 import core.Component
+import kotlinx.coroutines.flow.StateFlow
 
 interface ProfileComponent : Component {
+    val refreshToken: StateFlow<String?>
 
-    val routerState: Value<RouterState<ProfileDestination, Component>>
-
-    fun navigateToScreen(profileDestination: ProfileDestination)
-    fun navigateUp()
-
+    fun setRefreshToken(value: String?)
 }

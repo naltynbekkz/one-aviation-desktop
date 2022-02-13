@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreen(homeComponent: HomeComponent) {
+fun HomeScreen(component: HomeComponent) {
 
     LazyVerticalGrid(
         cells = GridCells.Adaptive(200.dp),
