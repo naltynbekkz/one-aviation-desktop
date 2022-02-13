@@ -1,4 +1,4 @@
-package main.profile
+package main.profile.profile
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement

@@ -31,7 +31,7 @@ import main.home.HomeNavigationComponentImpl
 import main.home.HomeTab
 import main.logs.LogsNavigationComponentImpl
 import main.logs.LogsTab
-import main.profile.ProfileNavigationComponentImpl
+import main.profile.navigation.ProfileNavigationComponentImpl
 import main.profile.ProfileTab
 import main.service.ServiceTab
 import main.service.salesDeals.SalesDealsNavigationComponentImpl

@@ -1,4 +1,4 @@
-package main.profile
+package main.profile.navigation
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.Router
@@ -7,7 +7,9 @@ import com.arkivanov.decompose.router.pop
 import com.arkivanov.decompose.router.router
 import com.arkivanov.decompose.value.Value
 import core.Component
-import core.CoreSettings
+import main.profile.profile.ProfileComponentImpl
+import main.profile.ProfileDestination
+import main.profile.changePassword.ChangePasswordComponentImpl
 import settings.SettingsProvider
 import settings.get
 
@@ -22,6 +24,7 @@ class ProfileNavigationComponentImpl(
         childFactory = { destination, componentContext ->
             when (destination) {
                 ProfileDestination.Profile -> ProfileComponentImpl(componentContext, settingsProvider.get())
+                ProfileDestination.ChangePassword -> ChangePasswordComponentImpl(componentContext)
             }
         }
     )

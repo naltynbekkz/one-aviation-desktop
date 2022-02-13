@@ -1,4 +1,4 @@
-package main.profile
+package main.profile.profile
 
 import core.Component
 import kotlinx.coroutines.flow.StateFlow

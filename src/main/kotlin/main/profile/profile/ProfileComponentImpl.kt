@@ -1,4 +1,4 @@
-package main.profile
+package main.profile.profile
 
 import com.arkivanov.decompose.ComponentContext
 import core.CoreSettings

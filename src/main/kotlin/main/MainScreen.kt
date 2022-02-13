@@ -57,8 +57,8 @@ import main.home.HomeNavigation
 import main.home.HomeNavigationComponent
 import main.logs.LogsNavigation
 import main.logs.LogsNavigationComponent
-import main.profile.ProfileNavigation
-import main.profile.ProfileNavigationComponent
+import main.profile.navigation.ProfileNavigation
+import main.profile.navigation.ProfileNavigationComponent
 import main.service.salesDeals.SalesDealsNavigation
 import main.service.salesDeals.SalesDealsNavigationComponent
 import main.service.services.ServicesNavigation
@@ -103,6 +103,7 @@ import main.storage.storageReport.StorageReportNavigation
 import main.storage.storageReport.StorageReportNavigationComponent
 import main.storage.turnover.TurnoverNavigation
 import main.storage.turnover.TurnoverNavigationComponent
+import theme.gray600
 
 @OptIn(ExperimentalDecomposeApi::class, androidx.compose.ui.ExperimentalComposeUiApi::class)
 @Composable
@@ -165,8 +166,7 @@ fun MainScreen(mainComponent: MainComponent) {
                         AnimatedVisibility(isExpanded) {
                             Column {
                                 destination.destinations.forEach {
-                                    Text(
-                                        text = it.title,
+                                    Row(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .hover()
@@ -178,7 +178,15 @@ fun MainScreen(mainComponent: MainComponent) {
                                                 mainComponent.navigateToScreen(it)
                                             }
                                             .padding(16.dp),
-                                    )
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                    ) {
+                                        Box(Modifier.size(16.dp).background(MaterialTheme.colors.gray600))
+                                        Text(
+                                            text = it.title,
+                                            modifier = Modifier
+                                        )
+                                    }
                                 }
                             }
                         }

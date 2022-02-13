@@ -1,4 +1,4 @@
-package main.profile
+package main.profile.navigation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,6 +9,11 @@ import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import core.slideFade
+import main.profile.ProfileDestination
+import main.profile.changePassword.ChangePasswordComponent
+import main.profile.changePassword.ChangePasswordScreen
+import main.profile.profile.ProfileComponent
+import main.profile.profile.ProfileScreen
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
@@ -19,7 +24,12 @@ fun ProfileNavigation(component: ProfileNavigationComponent) {
     Box(modifier = Modifier.fillMaxSize()) {
         Children(routerState = routerState, animation = slideFade()) {
             when (val child = it.instance) {
-                is ProfileComponent -> ProfileScreen(child, navigateToChangePassword = {})
+                is ProfileComponent -> ProfileScreen(child) {
+                    component.navigateToScreen(ProfileDestination.ChangePassword)
+                }
+                is ChangePasswordComponent -> ChangePasswordScreen(child) {
+                    component.navigateUp()
+                }
             }
         }
     }
