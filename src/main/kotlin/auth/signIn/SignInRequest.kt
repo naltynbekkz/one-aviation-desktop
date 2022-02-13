@@ -1,4 +1,4 @@
-package auth
+package auth.signIn
 
 import kotlinx.serialization.Serializable
 

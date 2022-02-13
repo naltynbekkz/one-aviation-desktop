@@ -1,7 +1,7 @@
 package network.impl
 
 import auth.AuthRepository
-import auth.SignInRequest
+import auth.signIn.SignInRequest
 import network.BaseRepository
 import network.TokenResponse
 

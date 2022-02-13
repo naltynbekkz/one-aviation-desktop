@@ -1,43 +1,53 @@
 package auth
 
+import auth.forgotPassword.ForgotPasswordComponentImpl
+import auth.signIn.SignInComponentImpl
+import auth.welcome.WelcomeComponentImpl
 import com.arkivanov.decompose.ComponentContext
-import core.CoreSettings
-import core.NullableInteractor
-import core.NullableInteractor.Companion.getNullableInteractor
-import network.TokenResponse
+import com.arkivanov.decompose.router.Router
+import com.arkivanov.decompose.router.RouterState
+import com.arkivanov.decompose.router.pop
+import com.arkivanov.decompose.router.router
+import com.arkivanov.decompose.value.Value
+import core.Component
+import network.RepositoryProvider
+import network.get
+import settings.SettingsProvider
+import settings.get
 
 class AuthComponentImpl(
     componentContext: ComponentContext,
-    repository: AuthRepository,
-    private val coreSettings: CoreSettings,
+    private val repositoryProvider: RepositoryProvider,
+    private val settingsProvider: SettingsProvider,
 ) : AuthComponent, ComponentContext by componentContext {
 
-    val signIn: NullableInteractor<TokenResponse, SignInRequest> = getNullableInteractor { request: SignInRequest ->
-        repository.signIn(request)
-    }
+    private val router: Router<AuthDestination, Component> = router(
+        initialConfiguration = AuthDestination.Welcome,
+        handleBackButton = true,
+        childFactory = ::resolveChild
+    )
 
-//    private val router: Router<AuthDestination, Any> = router(
-//        initialConfiguration = AuthDestination.SignIn,
-//        handleBackButton = true,
-//        childFactory = ::resolveChild
-//    )
-//
-//    override val routerState: Value<RouterState<AuthDestination, Any>> = router.state
-//
-//    private fun resolveChild(authDestination: AuthDestination, componentContext: ComponentContext): Any =
-//        when (authDestination) {
-//            AuthDestination.SignIn -> InDevelopmentComponent(componentContext)
-//            else -> InDevelopmentComponent(componentContext)
-//        }
+    override val routerState: Value<RouterState<AuthDestination, Component>> = router.state
+
+    private fun resolveChild(mainDestination: AuthDestination, componentContext: ComponentContext): Component =
+        when (mainDestination) {
+            AuthDestination.Welcome -> WelcomeComponentImpl(componentContext)
+            AuthDestination.SignIn -> SignInComponentImpl(
+                componentContext,
+                repositoryProvider.get(),
+                settingsProvider.get()
+            )
+            AuthDestination.ForgotPassword -> ForgotPasswordComponentImpl(componentContext)
+        }
 
     override fun navigateToScreen(authDestination: AuthDestination) {
-//        router.navigate {
-//            listOf(authDestination)
-//        }
+        router.navigate { list ->
+            list.filter { it != authDestination } + authDestination
+        }
     }
 
-    override fun setRefreshToken(value: String?) {
-        coreSettings.setRefreshToken(value)
+    override fun navigateUp() {
+        router.pop()
     }
 
 }
