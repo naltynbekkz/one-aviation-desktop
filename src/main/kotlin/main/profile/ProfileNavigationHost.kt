@@ -7,8 +7,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.Children
-import com.arkivanov.decompose.extensions.compose.jetbrains.animation.child.crossfadeScale
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
+import core.slideFade
 import development.InDevelopment
 import development.InDevelopmentScreen
 import main.profile.changePassword.ChangePasswordComponent
@@ -23,7 +23,7 @@ fun ProfileNavigationHost(profileComponent: ProfileComponent) {
     val routerState by profileComponent.routerState.subscribeAsState()
 
     Box(modifier = Modifier.fillMaxSize()) {
-        Children(routerState = routerState, animation = crossfadeScale()) {
+        Children(routerState = routerState, animation = slideFade()) {
             when (val child = it.instance) {
                 is InDevelopment -> InDevelopmentScreen(child)
                 is ChangePasswordComponent -> ChangePasswordScreen(child, profileComponent::navigateUp)

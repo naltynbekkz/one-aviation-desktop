@@ -7,11 +7,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import auth.AuthComponent
 import auth.AuthScreen
+import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.animation.child.crossfadeScale
 import main.MainComponent
 import main.MainScreen
 
+@OptIn(ExperimentalDecomposeApi::class)
 @Composable
 fun RootContent(root: RootComponent, modifier: Modifier = Modifier) {
 

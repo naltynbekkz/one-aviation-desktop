@@ -1,5 +1,6 @@
 package auth
 
+import auth.signIn.SignInRequest
 import network.ResponseState.*
 import network.TokenResponse
 

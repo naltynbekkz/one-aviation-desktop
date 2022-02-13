@@ -10,7 +10,6 @@ import core.Component
 import core.CoreSettings
 import main.MainComponentImpl
 import network.RepositoryProvider
-import network.get
 import settings.SettingsProvider
 import settings.get
 
@@ -31,11 +30,7 @@ class RootComponentImpl(
 
     private fun resolveChild(mainDestination: RootDestination, componentContext: ComponentContext): Component =
         when (mainDestination) {
-            RootDestination.Auth -> AuthComponentImpl(
-                componentContext,
-                repositoryProvider.get(),
-                settingsProvider.get()
-            )
+            RootDestination.Auth -> AuthComponentImpl(componentContext, repositoryProvider, settingsProvider)
             RootDestination.Main -> MainComponentImpl(repositoryProvider, settingsProvider, componentContext)
         }
 
