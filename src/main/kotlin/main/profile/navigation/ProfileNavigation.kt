@@ -12,6 +12,8 @@ import core.slideFade
 import main.profile.ProfileDestination
 import main.profile.changePassword.ChangePasswordComponent
 import main.profile.changePassword.ChangePasswordScreen
+import main.profile.editProfile.EditProfileComponent
+import main.profile.editProfile.EditProfileScreen
 import main.profile.profile.ProfileComponent
 import main.profile.profile.ProfileScreen
 
@@ -24,12 +26,14 @@ fun ProfileNavigation(component: ProfileNavigationComponent) {
     Box(modifier = Modifier.fillMaxSize()) {
         Children(routerState = routerState, animation = slideFade()) {
             when (val child = it.instance) {
-                is ProfileComponent -> ProfileScreen(child) {
-                    component.navigateToScreen(ProfileDestination.ChangePassword)
-                }
+                is ProfileComponent -> ProfileScreen(child,
+                    navigateToChangePassword = { component.navigateToScreen(ProfileDestination.ChangePassword) },
+                    navigateToEditProfile = { component.navigateToScreen(ProfileDestination.EditProfile) }
+                )
                 is ChangePasswordComponent -> ChangePasswordScreen(child) {
                     component.navigateUp()
                 }
+                is EditProfileComponent -> EditProfileScreen(child) { component.navigateUp() }
             }
         }
     }

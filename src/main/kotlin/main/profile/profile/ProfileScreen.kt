@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 fun ProfileScreen(
     profileScreenComponent: ProfileComponent,
     navigateToChangePassword: () -> Unit,
+    navigateToEditProfile: () -> Unit
 ) {
 
     val token by profileScreenComponent.refreshToken.collectAsState()
@@ -28,6 +29,12 @@ fun ProfileScreen(
                 navigateToChangePassword.invoke()
             }) {
                 Text("Change Password")
+            }
+
+            Button(onClick = {
+                navigateToEditProfile.invoke()
+            }) {
+                Text("Edit Profile")
             }
 
             AnimatedVisibility(token != null) {
