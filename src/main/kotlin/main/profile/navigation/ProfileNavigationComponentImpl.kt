@@ -7,9 +7,10 @@ import com.arkivanov.decompose.router.pop
 import com.arkivanov.decompose.router.router
 import com.arkivanov.decompose.value.Value
 import core.Component
-import main.profile.profile.ProfileComponentImpl
 import main.profile.ProfileDestination
 import main.profile.changePassword.ChangePasswordComponentImpl
+import main.profile.editProfile.EditProfileComponentImpl
+import main.profile.profile.ProfileComponentImpl
 import settings.SettingsProvider
 import settings.get
 
@@ -25,6 +26,7 @@ class ProfileNavigationComponentImpl(
             when (destination) {
                 ProfileDestination.Profile -> ProfileComponentImpl(componentContext, settingsProvider.get())
                 ProfileDestination.ChangePassword -> ChangePasswordComponentImpl(componentContext)
+                ProfileDestination.EditProfile -> EditProfileComponentImpl(componentContext)
             }
         }
     )

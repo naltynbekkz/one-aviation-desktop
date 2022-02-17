@@ -3,6 +3,7 @@ package main.settings
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.flow.StateFlow
 import main.MainSettings
+import main.MainTab
 
 class SettingsComponentImpl(
     componentContext: ComponentContext,
@@ -13,6 +14,11 @@ class SettingsComponentImpl(
 
     override fun setNightMode(value: Boolean) {
         mainSettings.setNightMode(value)
+    }
+
+    override val startupScreen = mainSettings.startupScreen
+    override fun setStartupScreen(value: MainTab) {
+        mainSettings.setStartupScreen(value)
     }
 
 }
