@@ -118,7 +118,7 @@ fun MainScreen(mainComponent: MainComponent) {
             modifier = Modifier
                 .background(color = MaterialTheme.colors.primary.copy(alpha = 0.12f))
                 .fillMaxHeight()
-                .width(360.dp)
+                .width(240.dp)
                 .verticalScroll(rememberScrollState()),
         ) {
             Spacer(Modifier.padding(vertical = 16.dp))

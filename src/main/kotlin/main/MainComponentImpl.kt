@@ -61,6 +61,7 @@ import main.storage.storageReport.StorageReportNavigationComponentImpl
 import main.storage.turnover.TurnoverNavigationComponentImpl
 import network.RepositoryProvider
 import settings.SettingsProvider
+import settings.get
 
 class MainComponentImpl(
     private val repositoryProvider: RepositoryProvider,
@@ -85,7 +86,7 @@ class MainComponentImpl(
     )
 
     private val router: Router<MainTab, Component> = router(
-        initialConfiguration = HomeTab,
+        initialConfiguration = settingsProvider.get<MainSettings>().startupScreen.value,
         handleBackButton = true,
         childFactory = ::resolveChild
     )
