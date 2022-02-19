@@ -19,16 +19,16 @@ class MainSettingsImpl(preferences: Preferences) : BaseSettings(preferences), Ma
 
     override fun setNightMode(value: Boolean) {
         preferences.putBoolean("nightMode", value)
+        preferences.flush()
     }
 
-    private val defaultStartupScreenTitle = preferences.get("startupScreen", HomeTab.title)
-    private val _startupScreen = MutableStateFlow(allTabs.find { tab ->
-        tab.title == defaultStartupScreenTitle
-    }!!)
+    private val _startupScreen = MutableStateFlow(
+        allTabs.find { tab -> tab.title == get("startupScreen") } ?: HomeTab
+    )
     override val startupScreen = _startupScreen.asStateFlow()
 
     override fun setStartupScreen(value: MainTab) {
-        preferences.put("startupScreen", value.title)
+        set("startupScreen", value.title)
     }
 
     override val listener = PreferenceChangeListener {
@@ -37,7 +37,7 @@ class MainSettingsImpl(preferences: Preferences) : BaseSettings(preferences), Ma
             "startupScreen" -> {
                 _startupScreen.value = allTabs.find { tab ->
                     tab.title == it.newValue
-                }!!
+                } ?: HomeTab
             }
         }
     }

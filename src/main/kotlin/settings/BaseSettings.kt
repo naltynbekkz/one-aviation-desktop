@@ -17,6 +17,7 @@ abstract class BaseSettings(
         } else {
             preferences.put(key, value)
         }
+        preferences.flush()
     }
 
 }

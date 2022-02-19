@@ -2,15 +2,13 @@ import androidx.compose.foundation.LocalScrollbarStyle
 import androidx.compose.foundation.defaultScrollbarStyle
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.WindowPlacement
-import androidx.compose.ui.window.application
-import androidx.compose.ui.window.rememberWindowState
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.window.*
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.lifecycle.LifecycleController
@@ -28,6 +26,8 @@ import java.util.prefs.Preferences
 
 @OptIn(ExperimentalDecomposeApi::class)
 fun main() {
+
+    val title = "One Aviation"
 
     val properties = Properties()
 
@@ -61,13 +61,22 @@ fun main() {
             LocalScrollbarStyle provides defaultScrollbarStyle(),
         ) {
 
-            val windowState = rememberWindowState(WindowPlacement.Fullscreen)
+            var isVisible by remember { mutableStateOf(true) }
+
+            val windowState = rememberWindowState(WindowPlacement.Maximized)
             LifecycleController(lifecycle, windowState)
 
             Window(
-                onCloseRequest = ::exitApplication,
+                onCloseRequest = {
+                    if (isTraySupported) {
+                        isVisible = false
+                    } else {
+                        exitApplication()
+                    }
+                },
                 state = windowState,
-                title = "One Aviation"
+                visible = isVisible,
+                title = title,
             ) {
 
                 val mainSettings = settingsProviderImpl.get<MainSettings>()
@@ -79,6 +88,29 @@ fun main() {
                     }
                 }
             }
+
+            if (isTraySupported) {
+                val state = rememberTrayState()
+                Tray(
+                    icon = TrayIcon,
+                    state = state,
+                    tooltip = title,
+                    onAction = {
+                        isVisible = true
+                    },
+                    menu = {
+                        Item("Exit", onClick = ::exitApplication)
+                    }
+                )
+            }
         }
+    }
+}
+
+object TrayIcon : Painter() {
+    override val intrinsicSize = Size(256f, 256f)
+
+    override fun DrawScope.onDraw() {
+        drawOval(Color(0xFFFFA500))
     }
 }
