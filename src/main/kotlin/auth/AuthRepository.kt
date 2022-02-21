@@ -1,7 +1,7 @@
 package auth
 
 import auth.signIn.SignInRequest
-import network.ResponseState.*
+import network.ResponseState.NetworkResponse
 import network.TokenResponse
 
 interface AuthRepository {
@@ -15,8 +15,6 @@ interface AuthRepository {
     suspend fun signIn(signInRequest: SignInRequest): NetworkResponse<TokenResponse>
 
 //    suspend fun signInBySms(signInRequestRequest: SignInBySmsRequest): NetworkResponse<TokenResponse>
-//
-//    suspend fun signOut(signOutRequest: SignOutRequest): NetworkResponse<Unit>
 //
 //    suspend fun signUp(signUpRequest: SignUpRequest): NetworkResponse<TokenResponse>
 }

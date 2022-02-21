@@ -5,9 +5,9 @@ import auth.signIn.SignInRequest
 import network.BaseRepository
 import network.TokenResponse
 
-class AuthRepositoryImpl : BaseRepository("auth-app/auth/v1"), AuthRepository {
+class AuthRepositoryImpl : BaseRepository("auth"), AuthRepository {
 
     override suspend fun signIn(signInRequest: SignInRequest) =
-        post<TokenResponse>("/sign-in", signInRequest)
+        post<TokenResponse>("/login", signInRequest)
 
 }

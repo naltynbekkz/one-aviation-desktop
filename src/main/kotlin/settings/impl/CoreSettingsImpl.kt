@@ -13,19 +13,9 @@ class CoreSettingsImpl(preferences: Preferences) : BaseSettings(preferences), Co
     override val refreshToken = _refreshToken.asStateFlow()
     override fun setRefreshToken(value: String?) = set("refreshToken", value)
 
-    private val _accessToken = MutableStateFlow<String?>(get("accessToken"))
-    override val accessToken = _accessToken.asStateFlow()
-    override fun setAccessToken(value: String?) = set("accessToken", value)
-
-    override fun setTokens(accessToken: String?, refreshToken: String?) {
-        setRefreshToken(refreshToken)
-        setAccessToken(accessToken)
-    }
-
     override val listener = PreferenceChangeListener {
         when (it.key) {
             "refreshToken" -> _refreshToken.value = it.newValue
-            "accessToken" -> _accessToken.value = it.newValue
         }
     }
 

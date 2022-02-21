@@ -1,5 +1,6 @@
 package network
 
+import core.CoreSettings
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.network.sockets.*
@@ -8,15 +9,17 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.delay
 import network.ResponseState.NetworkResponse
 
-abstract class BaseRepository(val basePath: String = "rest/clients-app") {
+abstract class BaseRepository(val basePath: String = "") {
 
     lateinit var client: HttpClient
-    lateinit var sessionManager: SessionManager
+    lateinit var coreSettings: CoreSettings
 
     suspend inline fun <reified T> request(call: () -> HttpResponse): NetworkResponse<T> {
         val response: NetworkResponse<T> = try {
+            delay(1500L)
             val response = call()
             val body = response.body<T>()
             return NetworkResponse.Success(body)
@@ -25,7 +28,7 @@ abstract class BaseRepository(val basePath: String = "rest/clients-app") {
         } catch (e: ClientRequestException) {
             when (e.response.status) {
                 HttpStatusCode.Unauthorized -> {
-                    sessionManager.logout()
+                    coreSettings.setRefreshToken(null)
                     NetworkResponse.Error.UnauthenticatedError()
                 }
                 HttpStatusCode.NotFound -> {
@@ -46,20 +49,20 @@ abstract class BaseRepository(val basePath: String = "rest/clients-app") {
         return response
     }
 
-    suspend inline fun <reified T> get(path: String, vararg queryParams: Pair<String, Any?>) = request<T> {
+    suspend inline fun <reified T> get(path: String, queryParams: Map<String, Any?>) = request<T> {
         client.get {
             url.set {
                 path("$basePath$path")
             }
             contentType(ContentType.Application.Json)
             queryParams.forEach {
-                val value = it.second
+                val value = it.value
                 if (value is List<*>) {
                     value.forEach { parameter ->
-                        parameter(it.first, parameter)
+                        parameter(it.key, parameter)
                     }
                 } else {
-                    parameter(it.first, it.second)
+                    parameter(it.key, it.value)
                 }
             }
         }

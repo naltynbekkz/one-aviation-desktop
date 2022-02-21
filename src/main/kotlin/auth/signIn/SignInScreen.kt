@@ -15,8 +15,8 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import core.GreenButton
-import java.util.*
+import core.LoadingGreenButton
+import network.ResponseState
 
 @Composable
 fun SignInScreen(
@@ -24,6 +24,8 @@ fun SignInScreen(
     navigateToForgotPassword: () -> Unit,
     navigateUp: () -> Unit,
 ) {
+
+    val responseState by signInComponent.signIn.response.collectAsState()
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 
@@ -72,15 +74,15 @@ fun SignInScreen(
                     },
             )
 
-            GreenButton(
+            LoadingGreenButton(
                 text = "Login",
+                isLoading = responseState is ResponseState.Loading,
                 modifier = Modifier
                     .padding(horizontal = 16.dp, vertical = 8.dp)
                     .wrapContentWidth()
                     .wrapContentHeight(),
             ) {
-                signInComponent.setRefreshToken(UUID.randomUUID().toString())
-//                viewModel.interactor.initialFetch(Login(username, password))
+                signInComponent.signIn.initialFetch(SignInRequest(username, password))
             }
 
             Box(

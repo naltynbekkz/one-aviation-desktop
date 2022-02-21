@@ -2,15 +2,14 @@ package network
 
 import core.CoreSettings
 import io.ktor.client.*
-import io.ktor.client.call.*
 import io.ktor.client.engine.apache.*
 import io.ktor.client.plugins.*
-import io.ktor.client.plugins.auth.*
-import io.ktor.client.plugins.auth.providers.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.*
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 
 fun provideKtorClient(apiKey: String, appVersion: Int, coreSettings: CoreSettings): HttpClient {
@@ -22,93 +21,43 @@ fun provideKtorClient(apiKey: String, appVersion: Int, coreSettings: CoreSetting
         explicitNulls = false
     }
 
-    val tokenClient = getHttpClient(apiKey, appVersion, json)
-
-    return getHttpClient(apiKey, appVersion, json) {
-        Auth {
-            bearer {
-                refreshTokens {
-                    val refreshToken = coreSettings.refreshToken.value
-                    if (refreshToken != null) {
-                        val refreshAccessTokenRequest = TokenRequest(
-                            refreshToken,
-                            appVersion.toString(),
-                        )
-                        try {
-                            val authResponse = tokenClient.post {
-                                url {
-                                    path("auth-app/auth/v1/tokens/refresh")
-                                }
-                                contentType(ContentType.Application.Json)
-                                setBody(refreshAccessTokenRequest)
-                            }
-                            val tokens = authResponse.body<TokenResponse>()
-                            coreSettings.setTokens(
-                                accessToken = tokens.accessToken,
-                                refreshToken = tokens.refreshToken,
-                            )
-                            BearerTokens(
-                                accessToken = tokens.accessToken,
-                                refreshToken = tokens.refreshToken,
-                            )
-                        } catch (e: Exception) {
-                            null
-                        }
-                    } else {
-                        null
-                    }
-                }
-                loadTokens {
-                    val accessToken = coreSettings.accessToken.value
-                    val refreshToken = coreSettings.refreshToken.value
-                    if (accessToken != null && refreshToken != null) {
-                        BearerTokens(accessToken = accessToken, refreshToken = refreshToken)
-                    } else {
-                        null
-                    }
-                }
-            }
-        }
-    }
+    return getHttpClient(apiKey, appVersion, json, coreSettings)
 }
 
 private fun getHttpClient(
     apiKey: String,
     appVersion: Int,
     json: Json,
+    coreSettings: CoreSettings,
     block: HttpClientConfig<ApacheEngineConfig>.() -> Unit = { },
 ): HttpClient {
     return HttpClient(Apache) {
 
         expectSuccess = true
 
-//        engine {
-//            config {
-//                trustAllSslInDebug()
-//            }
-//        }
         install(ContentNegotiation) {
             serialization(ContentType.Application.Json, json)
         }
 
         install(Logging) {
+            logger = Logger.DEFAULT
             level = LogLevel.ALL
         }
 
         defaultRequest {
 
-            url.protocol = URLProtocol.HTTPS
-            host = "dev.zapis.me"
+            url.protocol = URLProtocol.HTTP
+            host = "localhost:8080"
 
             header("api_key", apiKey)
             header("referrer", "desktop")
             header("desktop_app_version", appVersion.toString())
             header("api_version", "14")
 
-//            header("city_id", runBlocking { cityPreferences.getCity().first().id.toString() })
-//            runBlocking { profilePreferences.getFirebaseToken().first() }?.let {
-//                header("device_token", it)
-//            }
+            val token = runBlocking { coreSettings.refreshToken.first() }
+            if (!token.isNullOrEmpty()) {
+                header("Authorization", "Bearer $token")
+            }
         }
 
         block()

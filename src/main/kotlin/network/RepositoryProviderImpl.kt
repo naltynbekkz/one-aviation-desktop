@@ -2,6 +2,7 @@ package network
 
 import core.CoreSettings
 import network.impl.AuthRepositoryImpl
+import network.impl.ProfileRepositoryImpl
 
 class RepositoryProviderImpl(
     apiKey: String,
@@ -10,12 +11,12 @@ class RepositoryProviderImpl(
 ) : RepositoryProvider {
 
     private val httpClient = provideKtorClient(apiKey, appVersion, coreSettings)
-    private val sessionManager = SessionManager(coreSettings, httpClient)
 
     override val repositories = listOf<BaseRepository>(
-        AuthRepositoryImpl()
+        AuthRepositoryImpl(),
+        ProfileRepositoryImpl(),
     ).onEach {
         it.client = httpClient
-        it.sessionManager = sessionManager
+        it.coreSettings = coreSettings
     }
 }

@@ -99,6 +99,9 @@ fun main() {
                         isVisible = true
                     },
                     menu = {
+                        Item("notification") {
+                            state.sendNotification(Notification("Attention", "Bowser escped", Notification.Type.Info))
+                        }
                         Item("Exit", onClick = ::exitApplication)
                     }
                 )

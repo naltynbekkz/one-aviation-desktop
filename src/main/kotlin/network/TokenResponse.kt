@@ -1,10 +1,11 @@
 package network
 
+import core.Timestamp
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class TokenResponse(
-    val accessToken: String,
-    val expiresIn: Long,
-    val refreshToken: String,
+    var id: Long,
+    var uuid: String,
+    var timestamp: Timestamp,
 )

@@ -135,7 +135,7 @@ class MainComponentImpl(
             HelpTab.Support -> SupportNavigationComponentImpl(componentContext)
             HelpTab.Documentation -> DocumentationNavigationComponentImpl(componentContext)
             HelpTab.VideoInstructions -> VideoInstructionsNavigationComponentImpl(componentContext)
-            ProfileTab -> ProfileNavigationComponentImpl(componentContext, settingsProvider)
+            ProfileTab -> ProfileNavigationComponentImpl(componentContext, settingsProvider, repositoryProvider)
             else -> InDevelopmentComponentImpl(componentContext)
         }
 

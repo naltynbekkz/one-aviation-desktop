@@ -15,7 +15,6 @@ repositories {
     google()
     mavenCentral()
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-    maven(url = uri("https://maven.pkg.jetbrains.space/public/p/ktor/eap"))
 }
 
 dependencies {
@@ -46,7 +45,6 @@ tasks.withType<KotlinCompile>() {
 compose.desktop {
     application {
         mainClass = "AppKt"
-        javaHome = System.getenv("JDK_15")
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "one-aviation-desktop"

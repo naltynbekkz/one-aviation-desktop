@@ -4,11 +4,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
+import androidx.compose.material.*
 import androidx.compose.material.ButtonDefaults.buttonColors
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,6 +34,33 @@ fun GreenButton(
                 text = text,
                 fontSize = 16.sp,
             )
+        },
+    )
+}
+
+@Composable
+fun LoadingGreenButton(
+    text: String,
+    isLoading: Boolean,
+    modifier: Modifier = Modifier,
+    icon: (@Composable () -> Unit)? = null,
+    onClick: () -> Unit,
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier,
+        shape = RoundedCornerShape(8.dp),
+        colors = buttonColors(green, Color.White),
+        content = {
+            if (isLoading) {
+                CircularProgressIndicator()
+            } else {
+                icon?.invoke()
+                Text(
+                    text = text,
+                    fontSize = 16.sp,
+                )
+            }
         },
     )
 }

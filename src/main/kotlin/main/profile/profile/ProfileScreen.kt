@@ -1,6 +1,5 @@
 package main.profile.profile
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +11,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import core.LoadingGreenButton
+import network.ResponseState
 
 @Composable
 fun ProfileScreen(
@@ -20,7 +21,7 @@ fun ProfileScreen(
     navigateToEditProfile: () -> Unit
 ) {
 
-    val token by profileScreenComponent.refreshToken.collectAsState()
+    val responseState by profileScreenComponent.signOut.response.collectAsState()
 
     Box(Modifier.fillMaxSize(), Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
@@ -37,12 +38,11 @@ fun ProfileScreen(
                 Text("Edit Profile")
             }
 
-            AnimatedVisibility(token != null) {
-                Button({
-                    profileScreenComponent.setRefreshToken(null)
-                }) {
-                    Text("Log out")
-                }
+            LoadingGreenButton(
+                text = "Log out",
+                isLoading = responseState is ResponseState.Loading,
+            ) {
+                profileScreenComponent.signOut.initialFetch(Unit)
             }
         }
     }

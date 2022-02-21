@@ -1,12 +1,11 @@
 package auth.signIn
 
-import auth.AuthDestination
 import core.Component
+import core.NullableInteractor
+import network.TokenResponse
 
 interface SignInComponent : Component {
 
-    fun navigateToScreen(authDestination: AuthDestination)
-
-    fun setRefreshToken(value: String?)
+    val signIn: NullableInteractor<TokenResponse, SignInRequest>
 
 }

@@ -1,10 +1,10 @@
 package main.profile.profile
 
 import core.Component
-import kotlinx.coroutines.flow.StateFlow
+import core.NullableInteractor
 
 interface ProfileComponent : Component {
-    val refreshToken: StateFlow<String?>
 
-    fun setRefreshToken(value: String?)
+    val signOut: NullableInteractor<Unit, Unit>
+
 }

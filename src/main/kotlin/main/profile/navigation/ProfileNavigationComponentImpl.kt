@@ -11,12 +11,15 @@ import main.profile.ProfileDestination
 import main.profile.changePassword.ChangePasswordComponentImpl
 import main.profile.editProfile.EditProfileComponentImpl
 import main.profile.profile.ProfileComponentImpl
+import network.RepositoryProvider
+import network.get
 import settings.SettingsProvider
 import settings.get
 
 class ProfileNavigationComponentImpl(
     componentContext: ComponentContext,
     private val settingsProvider: SettingsProvider,
+    private val repositoryProvider: RepositoryProvider,
 ) : ProfileNavigationComponent, ComponentContext by componentContext {
 
     private val router: Router<ProfileDestination, Component> = router(
@@ -24,7 +27,7 @@ class ProfileNavigationComponentImpl(
         handleBackButton = true,
         childFactory = { destination, componentContext ->
             when (destination) {
-                ProfileDestination.Profile -> ProfileComponentImpl(componentContext, settingsProvider.get())
+                ProfileDestination.Profile -> ProfileComponentImpl(componentContext, repositoryProvider.get(), settingsProvider.get())
                 ProfileDestination.ChangePassword -> ChangePasswordComponentImpl(componentContext)
                 ProfileDestination.EditProfile -> EditProfileComponentImpl(componentContext)
             }
