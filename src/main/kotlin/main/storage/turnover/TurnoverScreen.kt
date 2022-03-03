@@ -1,17 +1,21 @@
 package main.storage.turnover
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Text
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import main.storage.turnover.data.PlaneHomeContent
 
 @Composable
 fun TurnoverScreen(component: TurnoverComponent) {
 
-    Box(Modifier.fillMaxSize(), Alignment.Center) {
+    /*Box(Modifier.fillMaxSize(), Alignment.Center) {
         Text("TurnoverScreen")
-    }
+    }*/
 
+    Scaffold(
+        floatingActionButton = { FloatingActionButton(onClick = {}) {} },
+        content = {
+            PlaneHomeContent()
+        }
+    )
 }
