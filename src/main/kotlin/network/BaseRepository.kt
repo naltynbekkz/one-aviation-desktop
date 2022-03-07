@@ -49,26 +49,26 @@ abstract class BaseRepository(val basePath: String = "") {
         return response
     }
 
-    suspend inline fun <reified T> get(path: String, queryParams: Map<String, Any?>) = request<T> {
+    suspend inline fun <reified T> get(path: String = "", queryParams: List<Pair<String, Any?>>? = null) = request<T> {
         client.get {
             url.set {
                 path("$basePath$path")
             }
             contentType(ContentType.Application.Json)
-            queryParams.forEach {
-                val value = it.value
+            queryParams?.forEach {
+                val value = it.second
                 if (value is List<*>) {
                     value.forEach { parameter ->
-                        parameter(it.key, parameter)
+                        parameter(it.first, parameter)
                     }
                 } else {
-                    parameter(it.key, it.value)
+                    parameter(it.first, it.second)
                 }
             }
         }
     }
 
-    suspend inline fun <reified T> post(path: String, body: Any) = request<T> {
+    suspend inline fun <reified T> post(path: String = "", body: Any) = request<T> {
         client.post {
             url {
                 path("$basePath$path")

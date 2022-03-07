@@ -9,6 +9,8 @@ import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import core.slideFade
+import main.staff.masters.addMaster.AddMasterComponent
+import main.staff.masters.addMaster.AddMasterScreen
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
@@ -19,7 +21,14 @@ fun MastersNavigation(component: MastersNavigationComponent) {
     Box(modifier = Modifier.fillMaxSize()) {
         Children(routerState = routerState, animation = slideFade()) {
             when (val child = it.instance) {
-                is MastersComponent -> MastersScreen(child)
+                is MastersComponent -> MastersScreen(
+                    component = child,
+                    addMaster = { component.navigateToScreen(MastersDestination.AddMaster) },
+                )
+                is AddMasterComponent -> AddMasterScreen(
+                    component = child,
+                    navigateUp = component::navigateUp
+                )
             }
         }
     }

@@ -14,8 +14,10 @@ class Interactor<T>(
     private val fetchData: suspend () -> ResponseState.NetworkResponse<T>,
 ) {
 
-    private val _response = MutableStateFlow<ResponseState<T>>(ResponseState.Loading(initialValue))
-    val response get() = _response.asStateFlow()
+    private val _isLoading = MutableStateFlow(true)
+    private val _response = MutableStateFlow<ResponseState.NetworkResponse<T>?>(initialValue?.let { ResponseState.NetworkResponse.Success(it) })
+    val isLoading = _isLoading.asStateFlow()
+    val response = _response.asStateFlow()
 
     private var currentJob: Job? = null
 
@@ -24,22 +26,18 @@ class Interactor<T>(
     }
 
     fun refresh() {
-        if (_response.value !is ResponseState.Loading) {
-            _response.value = ResponseState.Loading()
+        if (!_isLoading.value) {
             fetchData()
         }
     }
 
     private fun fetchData() {
+        _isLoading.value = true
         currentJob?.cancel()
         currentJob = scope.launch {
             _response.value = fetchData.invoke()
+            _isLoading.value = false
         }
-    }
-
-    fun setData(data: T) {
-        currentJob?.cancel()
-        this._response.value = ResponseState.NetworkResponse.Success(data)
     }
 
     val data: T? get() = (response.value as? ResponseState.NetworkResponse.Success)?.data

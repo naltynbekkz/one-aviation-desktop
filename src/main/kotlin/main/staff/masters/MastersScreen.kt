@@ -1,17 +1,65 @@
 package main.staff.masters
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import core.EmptyResponseHandler
+import core.ResponseComponent
+import main.staff.masters.data.PlaneListItem
 
 @Composable
-fun MastersScreen(component: MastersComponent) {
+fun MastersScreen(
+    component: MastersComponent,
+    addMaster: () -> Unit,
+) {
 
-    Box(Modifier.fillMaxSize(), Alignment.Center) {
-        Text("MastersScreen")
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text("Planes")
+                },
+                backgroundColor = MaterialTheme.colors.background,
+                actions = {
+                    TextButton(onClick = {
+                        addMaster()
+                    }) {
+                        Text("Add plane")
+                    }
+                    IconButton(onClick = {
+                        component.list.refresh()
+                    }) {
+                        Icon(Icons.Default.Refresh, null)
+                    }
+                }
+            )
+        }
+    ) {
+        Column {
+            ResponseComponent(
+                interactor = component.list,
+                emptyResponseHandler = EmptyResponseHandler(
+                    title = "There are no planes",
+                    subtitle = null,
+                    isEmpty = { it.isEmpty() })
+            ) {
+                LazyColumn(
+                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+                ) {
+                    items(
+                        items = it,
+                        itemContent = {
+                            PlaneListItem(plane = it)
+                        }
+                    )
+                }
+            }
+        }
     }
-
 }

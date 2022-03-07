@@ -31,8 +31,8 @@ import main.home.HomeNavigationComponentImpl
 import main.home.HomeTab
 import main.logs.LogsNavigationComponentImpl
 import main.logs.LogsTab
-import main.profile.navigation.ProfileNavigationComponentImpl
 import main.profile.ProfileTab
+import main.profile.navigation.ProfileNavigationComponentImpl
 import main.service.ServiceTab
 import main.service.salesDeals.SalesDealsNavigationComponentImpl
 import main.service.services.ServicesNavigationComponentImpl
@@ -96,8 +96,8 @@ class MainComponentImpl(
     private fun resolveChild(destination: MainTab, componentContext: ComponentContext): Component =
         when (destination) {
             HomeTab -> HomeNavigationComponentImpl(componentContext)
-            LogsTab -> LogsNavigationComponentImpl(componentContext)
-            StaffTab.Masters -> MastersNavigationComponentImpl(componentContext)
+            LogsTab -> LogsNavigationComponentImpl(componentContext, repositoryProvider)
+            StaffTab.Masters -> MastersNavigationComponentImpl(componentContext, repositoryProvider)
             StaffTab.Admins -> AdminsNavigationComponentImpl(componentContext)
             StaffTab.OtherStaff -> OtherStaffNavigationComponentImpl(componentContext)
             StaffTab.WorkingHours -> WorkingHoursNavigationComponentImpl(componentContext)
