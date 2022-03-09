@@ -7,9 +7,13 @@ import com.arkivanov.decompose.router.pop
 import com.arkivanov.decompose.router.router
 import com.arkivanov.decompose.value.Value
 import core.Component
+import main.staff.masters.addMaster.AddMasterComponentImpl
+import network.RepositoryProvider
+import network.get
 
 class MastersNavigationComponentImpl(
     componentContext: ComponentContext,
+    repositoryProvider: RepositoryProvider,
 ) : MastersNavigationComponent, ComponentContext by componentContext {
 
     private val router: Router<MastersDestination, Component> = router(
@@ -17,7 +21,14 @@ class MastersNavigationComponentImpl(
         handleBackButton = true,
         childFactory = { destination, componentContext ->
             when (destination) {
-                MastersDestination.Masters -> MastersComponentImpl(componentContext)
+                MastersDestination.Masters -> MastersComponentImpl(
+                    componentContext = componentContext,
+                    repository = repositoryProvider.get()
+                )
+                MastersDestination.AddMaster -> AddMasterComponentImpl(
+                    componentContext = componentContext,
+                    repository = repositoryProvider.get()
+                )
             }
         }
     )

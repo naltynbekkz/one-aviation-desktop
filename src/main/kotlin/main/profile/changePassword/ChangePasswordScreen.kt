@@ -16,85 +16,82 @@ fun ChangePasswordScreen(
     changePasswordComponent: ChangePasswordComponent,
     navigateUp: () -> Unit,
 ) {
-
-    Column {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text("Change Password")
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            navigateUp()
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.ArrowBack,
-                                contentDescription = "back button",
-                                tint = MaterialTheme.colors.primary,
-                            )
-                        }
-                    },
-                    backgroundColor = MaterialTheme.colors.background,
-                )
-            }
-        ) {
-            Box(Modifier.fillMaxSize(), Alignment.Center) {
-
-                var username: String by remember { mutableStateOf("") }
-                var password: String by remember { mutableStateOf("") }
-                var confirmPassword: String by remember { mutableStateOf("") }
-                var isVisible: Boolean by remember { mutableStateOf(false) }
-
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Change password", modifier = Modifier.padding(16.dp), fontSize = 24.sp
-                    )
-
-                    OutlinedTextField(value = username,
-                        onValueChange = { username = it },
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).wrapContentWidth(),
-                        label = { Text("Current password") })
-
-                    OutlinedTextField(value = password,
-                        onValueChange = { password = it },
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).wrapContentWidth(),
-                        label = { Text("New Password") })
-
-                    OutlinedTextField(value = confirmPassword,
-                        onValueChange = { confirmPassword = it },
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).wrapContentWidth(),
-                        label = { Text("Confirm Password") })
-
-                    Button(onClick = {
-                        isVisible = true
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text("Change Password")
+                },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        navigateUp()
                     }) {
-                        Text("Change the password")
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "back button",
+                            tint = MaterialTheme.colors.primary,
+                        )
                     }
-                }
+                },
+                backgroundColor = MaterialTheme.colors.background,
+            )
+        }
+    ) {
+        Box(Modifier.fillMaxSize(), Alignment.Center) {
 
-                Row(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalAlignment = Alignment.Bottom
-                ) {
-                    if (isVisible) {
-                        Snackbar(
-                            action = {
-                                TextButton(onClick = { isVisible = false }) {
-                                    Text(text = "Hide", color = Color.White)
-                                }
-                            }, modifier = Modifier.padding(4.dp)
-                        ) {
-                            Text(text = "Password is changed successfully")
-                        }
-                    }
-                }
+            var username: String by remember { mutableStateOf("") }
+            var password: String by remember { mutableStateOf("") }
+            var confirmPassword: String by remember { mutableStateOf("") }
+            var isVisible: Boolean by remember { mutableStateOf(false) }
 
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Change password", modifier = Modifier.padding(16.dp), fontSize = 24.sp
+                )
+
+                OutlinedTextField(value = username,
+                    onValueChange = { username = it },
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).wrapContentWidth(),
+                    label = { Text("Current password") })
+
+                OutlinedTextField(value = password,
+                    onValueChange = { password = it },
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).wrapContentWidth(),
+                    label = { Text("New Password") })
+
+                OutlinedTextField(value = confirmPassword,
+                    onValueChange = { confirmPassword = it },
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).wrapContentWidth(),
+                    label = { Text("Confirm Password") })
+
+                Button(onClick = {
+                    isVisible = true
+                }) {
+                    Text("Change the password")
+                }
             }
+
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                verticalAlignment = Alignment.Bottom
+            ) {
+                if (isVisible) {
+                    Snackbar(
+                        action = {
+                            TextButton(onClick = { isVisible = false }) {
+                                Text(text = "Hide", color = Color.White)
+                            }
+                        }, modifier = Modifier.padding(4.dp)
+                    ) {
+                        Text(text = "Password is changed successfully")
+                    }
+                }
+            }
+
         }
     }
 }

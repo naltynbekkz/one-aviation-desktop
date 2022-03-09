@@ -1,7 +1,15 @@
 package main.staff.masters
 
 import com.arkivanov.decompose.ComponentContext
+import core.Interactor.Companion.getInteractor
 
 class MastersComponentImpl(
     componentContext: ComponentContext,
-) : MastersComponent, ComponentContext by componentContext
+    repository: PlanesRepository,
+) : MastersComponent, ComponentContext by componentContext {
+
+    override val list = getInteractor {
+        repository.getPlanes()
+    }
+
+}

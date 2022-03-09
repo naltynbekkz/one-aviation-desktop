@@ -4,7 +4,7 @@ import main.MainTab
 import main.MainTabGroup
 
 object StaffTab : MainTabGroup("Staff") {
-    object Masters : MainTab("Masters")
+    object Masters : MainTab("Planes")
     object Admins : MainTab("Admins")
     object OtherStaff : MainTab("OtherStaff")
     object WorkingHours : MainTab("WorkingHours")

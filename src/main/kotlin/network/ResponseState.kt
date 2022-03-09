@@ -23,4 +23,25 @@ sealed class ResponseState<out T>(open val data: T? = null) {
             class ServerError<T>(data: T? = null) : Error<T>(data)
         }
     }
+
+    companion object {
+        fun <T, R> ResponseState<T>.convert(convert: (T) -> R): ResponseState<R> {
+            return when (this) {
+                is Loading -> Loading(data?.let(convert))
+                is NetworkResponse -> this.convert(convert)
+            }
+        }
+
+        fun <T, R> NetworkResponse<T>.convert(convert: (T) -> R): NetworkResponse<R> {
+            return when (this) {
+                is NetworkResponse.Error.UnknownError -> NetworkResponse.Error.UnknownError()
+                is NetworkResponse.Error.UnauthenticatedError -> NetworkResponse.Error.UnauthenticatedError()
+                is NetworkResponse.Error.NetworkError -> NetworkResponse.Error.NetworkError()
+                is NetworkResponse.Error.ServerError -> NetworkResponse.Error.ServerError()
+                is NetworkResponse.Error.CancelledError -> NetworkResponse.Error.CancelledError()
+                is NetworkResponse.Success -> NetworkResponse.Success(convert(data))
+            }
+        }
+    }
+
 }
