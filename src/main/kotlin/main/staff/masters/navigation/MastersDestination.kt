@@ -1,4 +1,4 @@
-package main.staff.masters
+package main.staff.masters.navigation
 
 import com.arkivanov.essenty.parcelable.Parcelable
 

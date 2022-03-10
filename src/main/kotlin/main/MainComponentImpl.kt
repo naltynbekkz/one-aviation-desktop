@@ -39,8 +39,8 @@ import main.service.services.ServicesNavigationComponentImpl
 import main.service.technologyMaps.TechnologyMapsNavigationComponentImpl
 import main.settings.SettingsTab
 import main.staff.StaffTab
-import main.staff.admins.AdminsNavigationComponentImpl
-import main.staff.masters.MastersNavigationComponentImpl
+import main.staff.admins.navigation.AdminsNavigationComponentImpl
+import main.staff.masters.navigation.MastersNavigationComponentImpl
 import main.staff.otherStaff.OtherStaffNavigationComponentImpl
 import main.staff.salaries.SalariesNavigationComponentImpl
 import main.staff.workingHours.WorkingHoursNavigationComponentImpl
@@ -98,7 +98,7 @@ class MainComponentImpl(
             HomeTab -> HomeNavigationComponentImpl(componentContext)
             LogsTab -> LogsNavigationComponentImpl(componentContext, repositoryProvider)
             StaffTab.Masters -> MastersNavigationComponentImpl(componentContext, repositoryProvider)
-            StaffTab.Admins -> AdminsNavigationComponentImpl(componentContext)
+            StaffTab.Admins -> AdminsNavigationComponentImpl(componentContext, repositoryProvider)
             StaffTab.OtherStaff -> OtherStaffNavigationComponentImpl(componentContext)
             StaffTab.WorkingHours -> WorkingHoursNavigationComponentImpl(componentContext)
             StaffTab.Salaries -> SalariesNavigationComponentImpl(componentContext)

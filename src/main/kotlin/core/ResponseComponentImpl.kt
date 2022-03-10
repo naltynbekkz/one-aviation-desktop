@@ -17,6 +17,32 @@ import androidx.compose.ui.text.style.TextAlign
 import network.ResponseState
 
 @Composable
+fun <T, S> ResponseComponent(
+    interactor: DependentInteractor<T, S>,
+    emptyResponseHandler: EmptyResponseHandler<T>? = null,
+    content: @Composable (T) -> Unit,
+) {
+    val response by interactor.response.collectAsState()
+    val isLoading by interactor.isLoading.collectAsState()
+    if (isLoading) {
+        LazyColumn(Modifier.fillMaxSize()) {
+            item {
+                Box(Modifier.fillParentMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            }
+        }
+    } else {
+        ResponseComponentImpl(
+            response = response,
+            emptyResponseHandler = emptyResponseHandler,
+            content = content
+        )
+    }
+}
+
+
+@Composable
 fun <T> ResponseComponent(
     interactor: Interactor<T>,
     emptyResponseHandler: EmptyResponseHandler<T>? = null,

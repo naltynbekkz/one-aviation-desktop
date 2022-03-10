@@ -10,12 +10,18 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import core.DateUtils.added
+import core.DateUtils.toDate
 import core.EmptyResponseHandler
 import core.ResponseComponent
 import core.hover
@@ -29,6 +35,8 @@ fun LogsScreen(
 
     val verticalScrollState = rememberScrollState()
 
+    val date by component.date.collectAsState()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -37,6 +45,21 @@ fun LogsScreen(
                 },
                 backgroundColor = MaterialTheme.colors.background,
                 actions = {
+                    IconButton(
+                        onClick = {
+                            component.setDate(date.added(days = -1))
+                        },
+                    ) {
+                        Icon(Icons.Default.ArrowBack, null)
+                    }
+                    Text(date.toDate())
+                    IconButton(
+                        onClick = {
+                            component.setDate(date.added(days = 1))
+                        },
+                    ) {
+                        Icon(Icons.Default.ArrowForward, null)
+                    }
                     IconButton(onClick = {
                         component.flights.refresh()
                     }) {

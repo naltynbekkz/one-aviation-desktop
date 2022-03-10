@@ -1,4 +1,4 @@
-package main.staff.masters
+package main.staff.masters.masters
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues

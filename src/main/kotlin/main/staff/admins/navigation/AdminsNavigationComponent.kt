@@ -1,4 +1,4 @@
-package main.staff.admins
+package main.staff.admins.navigation
 
 import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.value.Value

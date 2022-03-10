@@ -1,17 +1,26 @@
 package main.logs.logs
 
 import com.arkivanov.decompose.ComponentContext
-import core.Interactor.Companion.getInteractor
+import core.DateUtils
+import core.DateUtils.added
+import core.DependentInteractor.Companion.getDependentInteractor
+import kotlinx.coroutines.flow.MutableStateFlow
 import main.logs.FlightsRepository
 import network.ResponseState.Companion.convert
-import java.util.Calendar
+import java.util.*
 
 class LogsComponentImpl(
     componentContext: ComponentContext,
     repository: FlightsRepository,
 ) : LogsComponent, ComponentContext by componentContext {
-    override val flights = getInteractor {
-        repository.getFlights().convert {
+
+    override val date = MutableStateFlow(DateUtils.getMidnight())
+    override fun setDate(calendar: Calendar) {
+        date.value = calendar
+    }
+
+    override val flights = getDependentInteractor(date) {
+        repository.getFlights(it.timeInMillis, it.added(days = 1).timeInMillis).convert {
             it.groupBy { it.plane }.map {
                 val flights = it.value.groupBy {
                     val calendar = Calendar.getInstance()

@@ -1,4 +1,4 @@
-package main.staff.masters
+package main.staff.masters.navigation
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.Router
@@ -7,6 +7,7 @@ import com.arkivanov.decompose.router.pop
 import com.arkivanov.decompose.router.router
 import com.arkivanov.decompose.value.Value
 import core.Component
+import main.staff.masters.masters.MastersComponentImpl
 import main.staff.masters.addMaster.AddMasterComponentImpl
 import network.RepositoryProvider
 import network.get

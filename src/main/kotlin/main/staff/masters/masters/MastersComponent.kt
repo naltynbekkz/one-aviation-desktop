@@ -1,4 +1,4 @@
-package main.staff.masters
+package main.staff.masters.masters
 
 import core.Component
 import core.Interactor
