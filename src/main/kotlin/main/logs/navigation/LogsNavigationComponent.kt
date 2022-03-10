@@ -1,4 +1,4 @@
-package main.logs
+package main.logs.navigation
 
 import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.value.Value

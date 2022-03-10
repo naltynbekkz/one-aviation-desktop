@@ -7,7 +7,6 @@ import com.arkivanov.decompose.router.pop
 import com.arkivanov.decompose.router.router
 import com.arkivanov.decompose.value.Value
 import core.Component
-import main.profile.ProfileDestination
 import main.profile.changePassword.ChangePasswordComponentImpl
 import main.profile.editProfile.EditProfileComponentImpl
 import main.profile.profile.ProfileComponentImpl

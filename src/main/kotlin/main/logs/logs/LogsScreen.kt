@@ -1,6 +1,7 @@
-package main.logs
+package main.logs.logs
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -11,6 +12,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -20,7 +22,10 @@ import core.hover
 import theme.gray600
 
 @Composable
-fun LogsScreen(component: LogsComponent) {
+fun LogsScreen(
+    component: LogsComponent,
+    goToReservation: (Long) -> Unit,
+) {
 
     val verticalScrollState = rememberScrollState()
 
@@ -84,12 +89,16 @@ fun LogsScreen(component: LogsComponent) {
                                         ) {
                                             Text(index.toTime(), Modifier.padding(start = 8.dp, top = 2.dp))
                                             if (flights.isNotEmpty()) {
+                                                val flight = remember { flights[0] }
                                                 Text(
-                                                    flights[0].toString(),
+                                                    flight.toString(),
                                                     modifier = Modifier
                                                         .weight(1f)
                                                         .fillMaxHeight()
                                                         .background(color = MaterialTheme.colors.primary.copy(0.2f))
+                                                        .clickable {
+                                                            goToReservation(flight.id)
+                                                        }
                                                 )
                                             }
                                         }

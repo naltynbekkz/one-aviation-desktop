@@ -1,4 +1,4 @@
-package main.profile
+package main.profile.navigation
 
 import main.MainTab
 

@@ -4,7 +4,7 @@ import core.Timestamp
 import kotlinx.serialization.Serializable
 
 @Serializable
-class Plane(
+data class Plane(
     val id: Long,
     val name: String,
     val mileage: Long,

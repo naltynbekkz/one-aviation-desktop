@@ -1,7 +1,8 @@
-package main.logs
+package main.logs.logs
 
 import com.arkivanov.decompose.ComponentContext
 import core.Interactor.Companion.getInteractor
+import main.logs.FlightsRepository
 import network.ResponseState.Companion.convert
 import java.util.Calendar
 

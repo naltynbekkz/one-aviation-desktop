@@ -29,9 +29,9 @@ import main.help.support.SupportNavigationComponentImpl
 import main.help.videoInstructions.VideoInstructionsNavigationComponentImpl
 import main.home.HomeNavigationComponentImpl
 import main.home.HomeTab
-import main.logs.LogsNavigationComponentImpl
-import main.logs.LogsTab
-import main.profile.ProfileTab
+import main.logs.navigation.LogsNavigationComponentImpl
+import main.logs.navigation.LogsTab
+import main.profile.navigation.ProfileTab
 import main.profile.navigation.ProfileNavigationComponentImpl
 import main.service.ServiceTab
 import main.service.salesDeals.SalesDealsNavigationComponentImpl

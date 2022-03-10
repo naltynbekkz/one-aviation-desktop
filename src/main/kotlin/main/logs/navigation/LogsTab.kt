@@ -1,4 +1,4 @@
-package main.logs
+package main.logs.navigation
 
 import main.MainTab
 

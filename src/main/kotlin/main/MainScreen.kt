@@ -55,8 +55,8 @@ import main.help.videoInstructions.VideoInstructionsNavigation
 import main.help.videoInstructions.VideoInstructionsNavigationComponent
 import main.home.HomeNavigation
 import main.home.HomeNavigationComponent
-import main.logs.LogsNavigation
-import main.logs.LogsNavigationComponent
+import main.logs.navigation.LogsNavigation
+import main.logs.navigation.LogsNavigationComponent
 import main.profile.navigation.ProfileNavigation
 import main.profile.navigation.ProfileNavigationComponent
 import main.service.salesDeals.SalesDealsNavigation
