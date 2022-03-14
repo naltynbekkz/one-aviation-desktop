@@ -9,7 +9,6 @@ import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import core.slideFade
-import main.profile.ProfileDestination
 import main.profile.changePassword.ChangePasswordComponent
 import main.profile.changePassword.ChangePasswordScreen
 import main.profile.editProfile.EditProfileComponent

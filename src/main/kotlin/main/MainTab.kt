@@ -5,8 +5,8 @@ import main.client.ClientsTab
 import main.finance.FinanceTab
 import main.help.HelpTab
 import main.home.HomeTab
-import main.logs.LogsTab
-import main.profile.ProfileTab
+import main.logs.navigation.LogsTab
+import main.profile.navigation.ProfileTab
 import main.service.ServiceTab
 import main.settings.SettingsTab
 import main.staff.StaffTab

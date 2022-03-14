@@ -55,8 +55,8 @@ import main.help.videoInstructions.VideoInstructionsNavigation
 import main.help.videoInstructions.VideoInstructionsNavigationComponent
 import main.home.HomeNavigation
 import main.home.HomeNavigationComponent
-import main.logs.LogsNavigation
-import main.logs.LogsNavigationComponent
+import main.logs.navigation.LogsNavigation
+import main.logs.navigation.LogsNavigationComponent
 import main.profile.navigation.ProfileNavigation
 import main.profile.navigation.ProfileNavigationComponent
 import main.service.salesDeals.SalesDealsNavigation
@@ -67,10 +67,10 @@ import main.service.technologyMaps.TechnologyMapsNavigation
 import main.service.technologyMaps.TechnologyMapsNavigationComponent
 import main.settings.SettingsNavigation
 import main.settings.SettingsNavigationComponent
-import main.staff.admins.AdminsNavigation
-import main.staff.admins.AdminsNavigationComponent
-import main.staff.masters.MastersNavigation
-import main.staff.masters.MastersNavigationComponent
+import main.staff.admins.navigation.AdminsNavigation
+import main.staff.admins.navigation.AdminsNavigationComponent
+import main.staff.masters.navigation.MastersNavigation
+import main.staff.masters.navigation.MastersNavigationComponent
 import main.staff.otherStaff.OtherStaffNavigation
 import main.staff.otherStaff.OtherStaffNavigationComponent
 import main.staff.salaries.SalariesNavigation

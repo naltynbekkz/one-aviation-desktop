@@ -1,10 +1,7 @@
 package network
 
 import core.CoreSettings
-import network.impl.AuthRepositoryImpl
-import network.impl.FlightsRepositoryImpl
-import network.impl.PlanesRepositoryImpl
-import network.impl.ProfileRepositoryImpl
+import network.impl.*
 
 class RepositoryProviderImpl(
     apiKey: String,
@@ -19,6 +16,7 @@ class RepositoryProviderImpl(
         ProfileRepositoryImpl(),
         PlanesRepositoryImpl(),
         FlightsRepositoryImpl(),
+        AdminRepositoryImpl(),
     ).onEach {
         it.client = httpClient
         it.coreSettings = coreSettings
