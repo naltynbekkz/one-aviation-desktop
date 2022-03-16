@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import core.EmptyResponseHandler
 import core.ResponseComponent
 import main.staff.masters.data.PlaneListItem
+import main.staff.masters.navigation.MastersNavigationComponent
 
 @Composable
 fun MastersScreen(
