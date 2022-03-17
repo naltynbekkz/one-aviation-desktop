@@ -97,7 +97,7 @@ fun HomeScreen(component: HomeComponent) {
                                             shape = RoundedCornerShape(4.dp),
                                             elevation = 4.dp,
                                         ) {
-                                            Column {
+                                            Column(modifier = Modifier.fillMaxSize()) {
                                                 Text(
                                                     text = "Offline bookings",
                                                     modifier = Modifier.padding(horizontal = 12.dp).fillMaxWidth(),
@@ -121,7 +121,7 @@ fun HomeScreen(component: HomeComponent) {
                                             shape = RoundedCornerShape(4.dp),
                                             elevation = 4.dp,
                                         ) {
-                                            Column {
+                                            Column(modifier = Modifier.fillMaxSize()) {
                                                 Text(
                                                     text = "Online bookings",
                                                     modifier = Modifier.padding(horizontal = 12.dp).fillMaxWidth(),
@@ -145,7 +145,7 @@ fun HomeScreen(component: HomeComponent) {
                                             shape = RoundedCornerShape(4.dp),
                                             elevation = 4.dp,
                                         ) {
-                                            Column {
+                                            Column(modifier = Modifier.fillMaxSize()) {
                                                 Text(
                                                     text = "Served",
                                                     modifier = Modifier.padding(horizontal = 12.dp).fillMaxWidth(),
@@ -169,7 +169,7 @@ fun HomeScreen(component: HomeComponent) {
                                             shape = RoundedCornerShape(4.dp),
                                             elevation = 4.dp,
                                         ) {
-                                            Column {
+                                            Column(modifier = Modifier.fillMaxSize()) {
                                                 Text(
                                                     text = "New clients",
                                                     modifier = Modifier.padding(horizontal = 12.dp).fillMaxWidth(),
@@ -280,9 +280,10 @@ fun HomeScreen(component: HomeComponent) {
                                 )
                                 Text(
                                     text = "Show all >",
-                                    modifier = Modifier.padding(start = 400.dp),
+                                    modifier = Modifier.fillMaxWidth().padding(end = 16.dp),
                                     fontSize = 12.sp,
                                     fontStyle = FontStyle.Italic,
+                                    textAlign = TextAlign.End,
                                     textDecoration = TextDecoration.Underline,
                                     color = Color.Blue
                                 )
@@ -304,6 +305,7 @@ fun HomeScreen(component: HomeComponent) {
                                 ) {
                                     Text(
                                         text = "NEW",
+                                        modifier = Modifier.fillMaxSize(),
                                         fontSize = 12.sp,
                                         textAlign = TextAlign.Center,
                                         color = Color.White
@@ -318,11 +320,12 @@ fun HomeScreen(component: HomeComponent) {
                             }
                             Text(
                                 text = "Hello, dear users of One Aviation Administration. Happy New Year, may all your wishes come true. And we have a new batch of updates for you:",
-                                modifier = Modifier.padding(start = 18.dp, end = 18.dp, top = 12.dp)
+                                modifier = Modifier.padding(start = 18.dp, end = 18.dp, top = 12.dp),
+                                fontSize = 16.sp
                             )
                             Text(
                                 text = "Unfold",
-                                modifier = Modifier.padding(start = 18.dp, end = 18.dp, top = 12.dp),
+                                modifier = Modifier.padding(start = 18.dp),
                                 fontSize = 12.sp,
                                 color = Color.Blue,
                                 textDecoration = TextDecoration.Underline
