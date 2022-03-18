@@ -12,6 +12,13 @@ object DateUtils {
         return dateFormat.format(calendar.time)
     }
 
+    fun getStringTime(time: Long): String {
+        val calendar = getCalendar(time)
+        val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        dateFormat.timeZone = calendar.timeZone
+        return dateFormat.format(calendar.time)
+    }
+
     fun getCalendarFromDate(dateString: String): Calendar {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         return getCalendar().apply {

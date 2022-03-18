@@ -1,5 +1,5 @@
 package main.logs
 
 enum class FlightStatus {
-    BOOKING, CREATED;
+    BOOKING, CREATED, SERVED, CANCELLED;
 }

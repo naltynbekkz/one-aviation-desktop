@@ -12,4 +12,5 @@ data class Flight(
     val departure: Info,
     val arrival: Location,
     val status: FlightStatus,
+    val passengerCount: Int,
 )

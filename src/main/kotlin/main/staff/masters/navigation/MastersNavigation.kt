@@ -9,10 +9,14 @@ import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import core.slideFade
+import main.staff.admins.admin.AdminComponent
+import main.staff.admins.admin.AdminScreen
 import main.staff.masters.masters.MastersComponent
 import main.staff.masters.masters.MastersScreen
 import main.staff.masters.addMaster.AddMasterComponent
 import main.staff.masters.addMaster.AddMasterScreen
+import main.staff.masters.master.MasterComponent
+import main.staff.masters.master.MasterScreen
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
@@ -25,7 +29,14 @@ fun MastersNavigation(component: MastersNavigationComponent) {
             when (val child = it.instance) {
                 is MastersComponent -> MastersScreen(
                     component = child,
+                    navigateToMaster = { id ->
+                        component.navigateToScreen(MastersDestination.Master(id))
+                    },
                     addMaster = { component.navigateToScreen(MastersDestination.AddMaster) },
+                )
+                is MasterComponent -> MasterScreen(
+                    component = child,
+                    navigateUp = component::navigateUp,
                 )
                 is AddMasterComponent -> AddMasterScreen(
                     component = child,

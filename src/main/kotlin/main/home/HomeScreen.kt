@@ -2,6 +2,7 @@ package main.home
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
@@ -77,7 +78,7 @@ fun HomeScreen(component: HomeComponent) {
                         Column {
                             Text(
                                 text = "Booking for today",
-                                modifier = Modifier.padding(18.dp).fillMaxWidth(),
+                                modifier = Modifier.padding(12.dp).fillMaxWidth(),
                                 textAlign = TextAlign.Start,
                                 fontSize = 20.sp
                             )
@@ -86,105 +87,20 @@ fun HomeScreen(component: HomeComponent) {
                                 modifier = Modifier.fillMaxSize(),
                                 cells = GridCells.Adaptive(300.dp)
                             ) {
+                                item {
+                                    BookingStatistic("Offline bookings", 0)
+                                }
 
-                                items(4) { itemCount ->
-                                    if (itemCount == 0) {
-                                        Card(
-                                            modifier = Modifier
-                                                .padding(12.dp)
-                                                .requiredHeight(62.dp)
-                                                .fillMaxWidth(),
-                                            shape = RoundedCornerShape(4.dp),
-                                            elevation = 4.dp,
-                                        ) {
-                                            Column {
-                                                Text(
-                                                    text = "Offline bookings",
-                                                    modifier = Modifier.padding(horizontal = 12.dp).fillMaxWidth(),
-                                                    fontSize = 10.sp,
-                                                    textAlign = TextAlign.Start
-                                                )
-                                                Text(
-                                                    text = "0",
-                                                    fontWeight = FontWeight.SemiBold,
-                                                    modifier = Modifier.padding(horizontal = 12.dp).fillMaxWidth(),
-                                                    fontSize = 16.sp
-                                                )
-                                            }
-                                        }
-                                    } else if (itemCount == 1) {
-                                        Card(
-                                            modifier = Modifier
-                                                .padding(12.dp)
-                                                .requiredHeight(62.dp)
-                                                .fillMaxWidth(),
-                                            shape = RoundedCornerShape(4.dp),
-                                            elevation = 4.dp,
-                                        ) {
-                                            Column {
-                                                Text(
-                                                    text = "Online bookings",
-                                                    modifier = Modifier.padding(horizontal = 12.dp).fillMaxWidth(),
-                                                    fontSize = 10.sp,
-                                                    textAlign = TextAlign.Start
-                                                )
-                                                Text(
-                                                    text = "1",
-                                                    fontWeight = FontWeight.Bold,
-                                                    modifier = Modifier.padding(horizontal = 12.dp).fillMaxWidth(),
-                                                    fontSize = 16.sp
-                                                )
-                                            }
-                                        }
-                                    } else if (itemCount == 2) {
-                                        Card(
-                                            modifier = Modifier
-                                                .padding(12.dp)
-                                                .requiredHeight(62.dp)
-                                                .fillMaxWidth(),
-                                            shape = RoundedCornerShape(4.dp),
-                                            elevation = 4.dp,
-                                        ) {
-                                            Column {
-                                                Text(
-                                                    text = "Served",
-                                                    modifier = Modifier.padding(horizontal = 12.dp).fillMaxWidth(),
-                                                    fontSize = 10.sp,
-                                                    textAlign = TextAlign.Start
-                                                )
-                                                Text(
-                                                    text = "13",
-                                                    fontWeight = FontWeight.Bold,
-                                                    modifier = Modifier.padding(horizontal = 12.dp).fillMaxWidth(),
-                                                    fontSize = 16.sp
-                                                )
-                                            }
-                                        }
-                                    } else if (itemCount == 3) {
-                                        Card(
-                                            modifier = Modifier
-                                                .padding(12.dp)
-                                                .requiredHeight(62.dp)
-                                                .fillMaxWidth(),
-                                            shape = RoundedCornerShape(4.dp),
-                                            elevation = 4.dp,
-                                        ) {
-                                            Column {
-                                                Text(
-                                                    text = "New clients",
-                                                    modifier = Modifier.padding(horizontal = 12.dp).fillMaxWidth(),
-                                                    fontSize = 10.sp,
-                                                    textAlign = TextAlign.Start
-                                                )
-                                                Text(
-                                                    text = "25",
-                                                    fontWeight = FontWeight.Bold,
-                                                    modifier = Modifier.padding(horizontal = 12.dp).fillMaxWidth(),
-                                                    fontSize = 16.sp
-                                                )
-                                            }
-                                        }
-                                    }
+                                item {
+                                    BookingStatistic("Online bookings", 1)
+                                }
+
+                                item {
+                                    BookingStatistic("Served", 13)
+                                }
+
+                                item {
+                                    BookingStatistic("New clients", 25)
                                 }
                             }
                         }
@@ -280,7 +196,7 @@ fun HomeScreen(component: HomeComponent) {
                                 )
                                 Text(
                                     text = "Show all >",
-                                    modifier = Modifier.padding(start = 400.dp),
+                                    modifier = Modifier.fillMaxWidth().padding(end = 16.dp),
                                     fontSize = 12.sp,
                                     fontStyle = FontStyle.Italic,
                                     textDecoration = TextDecoration.Underline,
@@ -304,6 +220,7 @@ fun HomeScreen(component: HomeComponent) {
                                 ) {
                                     Text(
                                         text = "NEW",
+                                        modifier = Modifier.fillMaxSize(),
                                         fontSize = 12.sp,
                                         textAlign = TextAlign.Center,
                                         color = Color.White
@@ -318,11 +235,12 @@ fun HomeScreen(component: HomeComponent) {
                             }
                             Text(
                                 text = "Hello, dear users of One Aviation Administration. Happy New Year, may all your wishes come true. And we have a new batch of updates for you:",
-                                modifier = Modifier.padding(start = 18.dp, end = 18.dp, top = 12.dp)
+                                modifier = Modifier.padding(start = 18.dp, end = 18.dp, top = 12.dp),
+                                fontSize = 16.sp
                             )
                             Text(
                                 text = "Unfold",
-                                modifier = Modifier.padding(start = 18.dp, end = 18.dp, top = 12.dp),
+                                modifier = Modifier.padding(start = 18.dp),
                                 fontSize = 12.sp,
                                 color = Color.Blue,
                                 textDecoration = TextDecoration.Underline
@@ -393,6 +311,32 @@ fun HomeScreen(component: HomeComponent) {
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun BookingStatistic(text: String, value: Int) {
+    Card(
+        modifier = Modifier
+            .padding(6.dp)
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(4.dp),
+        elevation = 4.dp,
+    ) {
+        Column(modifier = Modifier.fillMaxWidth().padding(6.dp)) {
+            Text(
+                text = text,
+                modifier = Modifier.padding(horizontal = 12.dp).fillMaxWidth(),
+                fontSize = 10.sp,
+                textAlign = TextAlign.Start
+            )
+            Text(
+                text = value.toString(),
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(horizontal = 12.dp).fillMaxWidth(),
+                fontSize = 16.sp
+            )
         }
     }
 }

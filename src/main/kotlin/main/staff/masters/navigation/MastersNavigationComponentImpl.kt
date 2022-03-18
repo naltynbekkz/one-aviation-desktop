@@ -9,6 +9,7 @@ import com.arkivanov.decompose.value.Value
 import core.Component
 import main.staff.masters.masters.MastersComponentImpl
 import main.staff.masters.addMaster.AddMasterComponentImpl
+import main.staff.masters.master.MasterComponentImpl
 import network.RepositoryProvider
 import network.get
 
@@ -25,6 +26,11 @@ class MastersNavigationComponentImpl(
                 MastersDestination.Masters -> MastersComponentImpl(
                     componentContext = componentContext,
                     repository = repositoryProvider.get()
+                )
+                is MastersDestination.Master -> MasterComponentImpl(
+                    componentContext = componentContext,
+                    repository = repositoryProvider.get(),
+                    id = destination.id,
                 )
                 MastersDestination.AddMaster -> AddMasterComponentImpl(
                     componentContext = componentContext,

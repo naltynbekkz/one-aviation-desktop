@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
@@ -21,11 +22,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import core.DateUtils.added
+import core.DateUtils.getStringTime
 import core.DateUtils.toDate
 import core.EmptyResponseHandler
+import core.HoverCard
 import core.ResponseComponent
-import core.hover
+import main.logs.Flight
+import main.logs.FlightStatus
 import theme.gray600
+import kotlin.time.Duration.Companion.hours
 
 @Composable
 fun LogsScreen(
@@ -99,29 +104,23 @@ fun LogsScreen(
                                         if (index % 2 == 0) {
                                             Divider()
                                         }
-                                        Row(
+                                        Box(
                                             modifier = Modifier
                                                 .fillMaxWidth()
-                                                .height(40.dp)
-                                                .hover {
-                                                    drawRect(
-                                                        color = Color.Green,
-                                                        alpha = 0.3f,
-                                                    )
-                                                },
+                                                .height(80.dp),
                                         ) {
-                                            Text(index.toTime(), Modifier.padding(start = 8.dp, top = 2.dp))
                                             if (flights.isNotEmpty()) {
                                                 val flight = remember { flights[0] }
+                                                LogItem(
+                                                    flight = flight,
+                                                    setStatus = { component.updateFlight.initialFetch(flight.id to it) },
+                                                    modifier = Modifier.fillMaxSize()
+                                                        .clickable(onClick = { goToReservation(flight.id) }),
+                                                )
+                                            } else {
                                                 Text(
-                                                    flight.toString(),
-                                                    modifier = Modifier
-                                                        .weight(1f)
-                                                        .fillMaxHeight()
-                                                        .background(color = MaterialTheme.colors.primary.copy(0.2f))
-                                                        .clickable {
-                                                            goToReservation(flight.id)
-                                                        }
+                                                    index.toTime(),
+                                                    Modifier.padding(start = 8.dp, top = 2.dp),
                                                 )
                                             }
                                         }
@@ -132,6 +131,80 @@ fun LogsScreen(
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun LogItem(
+    flight: Flight,
+    setStatus: (FlightStatus) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+
+    val backgroundColor = when (flight.status) {
+        FlightStatus.BOOKING -> error("this shouldn't be here")
+        FlightStatus.CREATED -> Color.Yellow
+        FlightStatus.SERVED -> MaterialTheme.colors.secondary
+        FlightStatus.CANCELLED -> Color.Red
+    }
+
+    HoverCard {
+        Column(modifier = modifier.background(color = backgroundColor.copy(alpha = 0.24f))) {
+            Row(
+                modifier = Modifier.background(color = backgroundColor)
+            ) {
+                Text(
+                    text = getStringTime(flight.departure.time) + " - " + getStringTime(flight.departure.time + 0.5.hours.inWholeMilliseconds),
+                    style = MaterialTheme.typography.caption,
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                if (flight.status != FlightStatus.SERVED) {
+                    Box(
+                        modifier = Modifier
+                            .padding(2.dp)
+                            .size(16.dp)
+                            .background(
+                                color = MaterialTheme.colors.secondary,
+                                shape = CircleShape,
+                            )
+                            .clickable {
+                                setStatus(FlightStatus.SERVED)
+                            }
+                    )
+                }
+                if (flight.status != FlightStatus.CREATED) {
+                    Box(
+                        modifier = Modifier
+                            .padding(2.dp)
+                            .size(16.dp)
+                            .background(
+                                color = Color.Yellow,
+                                shape = CircleShape,
+                            )
+                            .clickable {
+                                setStatus(FlightStatus.CREATED)
+                            }
+                    )
+                }
+                if (flight.status != FlightStatus.CANCELLED) {
+                    Box(
+                        modifier = Modifier
+                            .padding(2.dp)
+                            .size(16.dp)
+                            .background(
+                                color = Color.Red,
+                                shape = CircleShape,
+                            )
+                            .clickable {
+                                setStatus(FlightStatus.CANCELLED)
+                            }
+                    )
+                }
+            }
+            Text("From: ${flight.departure.location.address}", style = MaterialTheme.typography.caption)
+            Text("To: ${flight.arrival.address}", style = MaterialTheme.typography.caption)
+            Text("${flight.passengerCount} passenger(s)", style = MaterialTheme.typography.caption)
         }
     }
 }

@@ -19,7 +19,7 @@ abstract class BaseRepository(val basePath: String = "") {
 
     suspend inline fun <reified T> request(call: () -> HttpResponse): NetworkResponse<T> {
         val response: NetworkResponse<T> = try {
-            delay(1500L)
+//            delay(1500L)
             val response = call()
             val body = response.body<T>()
             return NetworkResponse.Success(body)

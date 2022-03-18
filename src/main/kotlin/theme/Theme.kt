@@ -15,7 +15,7 @@ fun OneAviationTheme(
 ) {
     val primary by animateColorAsState(if (darkTheme) darkFroly else froly)
     val primaryVariant by animateColorAsState(if (darkTheme) Color(0xFF3700B3) else Color(0xFF3700B3))
-    val secondary by animateColorAsState(if (darkTheme) Color(0xFF03DAC6) else Color(0xFF03DAC6))
+    val secondary by animateColorAsState(if (darkTheme) darkGreen else green)
     val secondaryVariant by animateColorAsState(if (darkTheme) Color(0xFF03DAC6) else Color(0xFF018786))
     val background by animateColorAsState(if (darkTheme) Color(0xFF121212) else Color.White)
     val surface by animateColorAsState(if (darkTheme) Color(0xFF121212) else Color.White)

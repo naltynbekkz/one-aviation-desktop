@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
@@ -139,7 +140,6 @@ fun MainScreen(mainComponent: MainComponent) {
                 ) {
                     Row(
                         modifier = Modifier
-                            .padding(horizontal = 12.dp)
                             .fillMaxWidth()
                             .height(56.dp)
                             .hover()
@@ -174,14 +174,17 @@ fun MainScreen(mainComponent: MainComponent) {
                                                 interactionSource = remember { MutableInteractionSource() },
                                                 indication = null,
                                                 enabled = it != selectedDestination,
-                                            ) {
-                                                mainComponent.navigateToScreen(it)
-                                            }
+                                                onClick = { mainComponent.navigateToScreen(it) },
+                                            )
                                             .padding(16.dp),
                                         verticalAlignment = Alignment.CenterVertically,
                                         horizontalArrangement = Arrangement.spacedBy(4.dp),
                                     ) {
-                                        Box(Modifier.size(16.dp).background(MaterialTheme.colors.gray600))
+                                        Box(
+                                            modifier = Modifier
+                                                .size(8.dp)
+                                                .background(color = MaterialTheme.colors.gray600, shape = CircleShape)
+                                        )
                                         Text(
                                             text = it.title,
                                             modifier = Modifier

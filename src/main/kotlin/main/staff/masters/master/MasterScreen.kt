@@ -1,4 +1,4 @@
-package main.staff.admins.admin
+package main.staff.masters.master
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
@@ -14,13 +14,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import core.LoadingGreenButton
 import core.ResponseComponent
-import main.staff.admins.addAdmin.RegistrationRequest
 import network.ResponseState
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
 @Composable
-fun AdminScreen(
-    component: AdminComponent,
+fun MasterScreen(
+    component: MasterComponent,
     navigateUp: () -> Unit,
 ) {
 
@@ -36,7 +35,7 @@ fun AdminScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Admin")
+                    Text("Plane")
                 },
                 navigationIcon = {
                     IconButton(onClick = {
@@ -52,7 +51,7 @@ fun AdminScreen(
                 backgroundColor = MaterialTheme.colors.background,
                 actions = {
                     IconButton(onClick = {
-                        component.admin.refresh()
+                        component.plane.refresh()
                     }) {
                         Icon(Icons.Default.Refresh, null)
                     }
@@ -61,14 +60,16 @@ fun AdminScreen(
         }
     ) {
         ResponseComponent(
-            interactor = component.admin,
-        ) { admin ->
-            var username by remember { mutableStateOf(admin.username) }
-            var firstName by remember { mutableStateOf(admin.firstName) }
-            var lastName by remember { mutableStateOf(admin.lastName) }
-            var password by remember { mutableStateOf("") }
+            interactor = component.plane,
+        ) { plane ->
 
             var isEdit: Boolean by remember { mutableStateOf(false) }
+
+            var name: String by remember { mutableStateOf(plane.name) }
+            var mileage: String by remember { mutableStateOf(plane.mileage.toString()) }
+            var price: String by remember { mutableStateOf(plane.price.toString()) }
+            var capacity: String by remember { mutableStateOf(plane.capacity.toString()) }
+
 
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -76,39 +77,39 @@ fun AdminScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Admin", modifier = Modifier.padding(16.dp), fontSize = 24.sp
+                    text = "Plane Info", modifier = Modifier.padding(16.dp), fontSize = 24.sp
                 )
 
                 OutlinedTextField(
-                    value = username,
-                    onValueChange = { username = it },
+                    value = name,
+                    onValueChange = { name = it },
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).wrapContentWidth(),
-                    label = { Text("Username") },
-                    enabled = isEdit
+                    label = { Text("Name") },
+                    readOnly = !isEdit
                 )
 
                 OutlinedTextField(
-                    value = firstName,
-                    onValueChange = { firstName = it },
+                    value = mileage,
+                    onValueChange = { mileage = it },
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).wrapContentWidth(),
-                    label = { Text("FirstName") },
-                    enabled = isEdit
+                    label = { Text("Mileage") },
+                    readOnly = !isEdit
                 )
 
                 OutlinedTextField(
-                    value = lastName,
-                    onValueChange = { lastName = it },
+                    value = price,
+                    onValueChange = { price = it },
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).wrapContentWidth(),
-                    label = { Text("LastName") },
-                    enabled = isEdit
+                    label = { Text("Price") },
+                    readOnly = !isEdit
                 )
 
                 OutlinedTextField(
-                    value = password,
-                    onValueChange = { password = it },
+                    value = capacity,
+                    onValueChange = { capacity = it },
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).wrapContentWidth(),
-                    label = { Text("Password") },
-                    enabled = isEdit
+                    label = { Text("Capacity") },
+                    readOnly = !isEdit
                 )
 
                 LoadingGreenButton(
@@ -117,11 +118,11 @@ fun AdminScreen(
                 ) {
                     if (isEdit) {
                         component.edit.initialFetch(
-                            admin.id to RegistrationRequest(
-                                username = username,
-                                firstName = firstName,
-                                lastName = lastName,
-                                password = password,
+                            plane.id to EditPlaneRequest(
+                                name = name,
+                                mileage = mileage.toLong(),
+                                capacity = capacity.toInt(),
+                                price = price.toFloat(),
                             )
                         )
                     }

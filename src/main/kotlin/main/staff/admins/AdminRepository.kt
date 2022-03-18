@@ -9,5 +9,6 @@ interface AdminRepository {
     suspend fun getAdmins(): NetworkResponse<List<User>>
     suspend fun getAdmin(id: Long): NetworkResponse<User>
     suspend fun deleteAdmin(id: Long): NetworkResponse<Unit>
+    suspend fun editAdmin(id: Long, request: RegistrationRequest): NetworkResponse<User>
 
 }

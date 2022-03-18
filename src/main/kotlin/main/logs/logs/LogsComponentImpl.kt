@@ -4,8 +4,11 @@ import com.arkivanov.decompose.ComponentContext
 import core.DateUtils
 import core.DateUtils.added
 import core.DependentInteractor.Companion.getDependentInteractor
+import core.NullableInteractor.Companion.getNullableInteractor
 import kotlinx.coroutines.flow.MutableStateFlow
+import main.logs.FlightStatus
 import main.logs.FlightsRepository
+import network.ResponseState
 import network.ResponseState.Companion.convert
 import java.util.*
 
@@ -35,5 +38,13 @@ class LogsComponentImpl(
                 it.key to list
             }.toList()
         }
+    }
+
+    override val updateFlight = getNullableInteractor { pair: Pair<Long, FlightStatus> ->
+        val response = repository.updateFlight(pair.first, pair.second)
+        if (response is ResponseState.NetworkResponse.Success) {
+            flights.refresh()
+        }
+        response
     }
 }

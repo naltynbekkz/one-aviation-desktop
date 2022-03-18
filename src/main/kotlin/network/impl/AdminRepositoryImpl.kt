@@ -18,4 +18,7 @@ class AdminRepositoryImpl : BaseRepository("users/admins"), AdminRepository {
 
     override suspend fun deleteAdmin(id: Long) =
         delete<Unit>("/$id")
+
+    override suspend fun editAdmin(id: Long, request: RegistrationRequest) =
+        put<User>("/$id", request)
 }
