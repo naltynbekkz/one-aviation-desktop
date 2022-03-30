@@ -61,7 +61,7 @@ fun SourcesScreen(component: SourcesComponent) {
                     end = 6.3f,
                     sliceCount = 7,
                     entries = component.entries,
-                    modifier = Modifier.padding(16.dp).fillMaxSize(),
+                    modifier = Modifier.padding(16.dp).weight(1f).fillMaxWidth(),
                 )
             }
 

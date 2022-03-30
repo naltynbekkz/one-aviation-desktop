@@ -26,8 +26,8 @@ fun LineChart(
         repeat(sliceCount + 1) {
             drawLine(
                 color = lineColor,
-                start = Offset(0f, 0f + it * cellHeight),
-                end = Offset(size.width, 0f + it * cellHeight),
+                start = Offset(0f, it * cellHeight),
+                end = Offset(size.width, it * cellHeight),
                 strokeWidth = 2.dp.toPx()
             )
         }
