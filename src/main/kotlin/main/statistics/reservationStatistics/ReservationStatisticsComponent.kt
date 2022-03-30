@@ -1,9 +1,10 @@
 package main.statistics.reservationStatistics
 
 import core.Component
-import main.statistics.compose.HorizontalBarChartEntry
+import main.statistics.compose.BarChartEntry
 
 interface ReservationStatisticsComponent : Component {
-    val mastersRevenueEntries: List<HorizontalBarChartEntry>
-    val mastersReservationsEntries: List<HorizontalBarChartEntry>
+    val mastersRevenueEntries: List<BarChartEntry>
+    val mastersReservationsEntries: List<BarChartEntry>
+    val revenueEntries: List<BarChartEntry>
 }

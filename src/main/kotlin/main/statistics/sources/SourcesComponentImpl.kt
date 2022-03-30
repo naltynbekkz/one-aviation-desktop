@@ -2,6 +2,7 @@ package main.statistics.sources
 
 import androidx.compose.ui.graphics.Color
 import com.arkivanov.decompose.ComponentContext
+import main.statistics.compose.BarChartEntry
 import main.statistics.compose.LineChartEntry
 
 class SourcesComponentImpl(
@@ -31,4 +32,25 @@ class SourcesComponentImpl(
         ),
     )
 
+    override val revenue = listOf(
+        BarChartEntry("2Гис", 25000f),
+        BarChartEntry("Instagram", 30000f),
+        BarChartEntry("ВКонтакте", 1000f),
+        BarChartEntry("Друзья", 0f),
+        BarChartEntry("Коллеги", 20000f),
+        BarChartEntry("рекомендации", 230000f),
+        BarChartEntry("Сарафанное радио", 0f),
+        BarChartEntry("Таргет", 0f),
+    )
+
+    override val reservations = listOf(
+        BarChartEntry("2Гис", 7f),
+        BarChartEntry("Instagram", 10f),
+        BarChartEntry("ВКонтакте", 4f),
+        BarChartEntry("Друзья", 0f),
+        BarChartEntry("Коллеги", 3f),
+        BarChartEntry("рекомендации", 13f),
+        BarChartEntry("Сарафанное радио", 0f),
+        BarChartEntry("Таргет", 0f),
+    )
 }

@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import main.statistics.compose.HorizontalBarChart
+import main.statistics.compose.VerticalBarChart
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -40,7 +41,26 @@ fun ReservationStatisticsScreen(component: ReservationStatisticsComponent) {
                     .fillMaxWidth(),
                 elevation = 4.dp,
             ) {
+                Column(
+                    modifier = Modifier.fillMaxSize().padding(24.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                ) {
 
+                    Text(
+                        text = "Оборот",
+                        style = MaterialTheme.typography.h6,
+                    )
+
+                    VerticalBarChart(
+                        start = 0f,
+                        end = 7500f,
+                        sliceCount = 5,
+                        color = Color(red = 152, green = 200, blue = 250),
+                        entries = component.revenueEntries,
+                        modifier = Modifier.padding(16.dp).weight(1f).fillMaxWidth(),
+                    )
+
+                }
             }
         }
         item {

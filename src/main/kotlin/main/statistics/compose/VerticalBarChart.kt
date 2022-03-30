@@ -8,10 +8,8 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
-val barWidth = 24.dp
-
 @Composable
-fun HorizontalBarChart(
+fun VerticalBarChart(
     start: Float,
     end: Float,
     sliceCount: Int,
@@ -20,22 +18,22 @@ fun HorizontalBarChart(
     modifier: Modifier = Modifier,
 ) {
     Canvas(modifier) {
-        val cellWidth = size.width / sliceCount
-        val cellHeight = size.height / entries.size
+        val cellWidth = size.width / entries.size
+        val cellHeight = size.height / sliceCount
 
         repeat(sliceCount + 1) {
             drawLine(
                 color = lineColor,
-                start = Offset(it * cellWidth, 0f),
-                end = Offset(it * cellWidth, size.height),
+                start = Offset(0f, it * cellHeight),
+                end = Offset(size.width, it * cellHeight),
                 strokeWidth = 2.dp.toPx()
             )
         }
 
         drawLine(
             color = lineColor,
-            start = Offset(0f, size.height),
-            end = Offset(size.width, size.height),
+            start = Offset(0f, 0f),
+            end = Offset(0f, size.height),
             strokeWidth = 2.dp.toPx()
         )
 
@@ -44,8 +42,8 @@ fun HorizontalBarChart(
         entries.forEachIndexed { index, entry ->
             drawRect(
                 color = color,
-                topLeft = Offset(x = 0f, y = index * cellHeight + (cellHeight - barWidth.toPx()) / 2),
-                size = Size(width = entry.value * size.width / totalValue, height = barWidth.toPx())
+                topLeft = Offset(x = index * cellWidth + (cellWidth - barWidth.toPx()) / 2, y = (totalValue - entry.value) * size.height / totalValue),
+                size = Size(width = barWidth.toPx(), height = entry.value * size.height / totalValue)
             )
         }
     }
