@@ -99,6 +99,9 @@ fun main() {
                         isVisible = true
                     },
                     menu = {
+                        Item("Show One Aviation") {
+                            isVisible = true
+                        }
                         Item("notification") {
                             state.sendNotification(Notification("Attention", "Bowser escped", Notification.Type.Info))
                         }

@@ -85,7 +85,7 @@ fun HomeScreen(component: HomeComponent) {
 
                             LazyVerticalGrid(
                                 modifier = Modifier.fillMaxSize(),
-                                cells = GridCells.Adaptive(300.dp)
+                                cells = GridCells.Adaptive(200.dp)
                             ) {
                                 item {
                                     BookingStatistic("Offline bookings", 0)
