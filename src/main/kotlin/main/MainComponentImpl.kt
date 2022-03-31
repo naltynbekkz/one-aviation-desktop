@@ -37,7 +37,8 @@ import main.service.ServiceTab
 import main.service.salesDeals.SalesDealsNavigationComponentImpl
 import main.service.services.ServicesNavigationComponentImpl
 import main.service.technologyMaps.TechnologyMapsNavigationComponentImpl
-import main.settings.SettingsTab
+import main.settings.navigation.SettingsNavigationComponentImpl
+import main.settings.navigation.SettingsTab
 import main.staff.StaffTab
 import main.staff.admins.navigation.AdminsNavigationComponentImpl
 import main.staff.masters.navigation.MastersNavigationComponentImpl
@@ -130,7 +131,7 @@ class MainComponentImpl(
             FinanceTab.Income -> IncomeNavigationComponentImpl(componentContext)
             FinanceTab.Expense -> ExpenseNavigationComponentImpl(componentContext)
             FinanceTab.Reports -> ReportsNavigationComponentImpl(componentContext)
-            SettingsTab -> main.settings.SettingsNavigationComponentImpl(componentContext, settingsProvider)
+            SettingsTab -> SettingsNavigationComponentImpl(componentContext, settingsProvider)
             HelpTab.Feedback -> main.help.feedback.FeedbackNavigationComponentImpl(componentContext)
             HelpTab.Support -> SupportNavigationComponentImpl(componentContext)
             HelpTab.Documentation -> DocumentationNavigationComponentImpl(componentContext)

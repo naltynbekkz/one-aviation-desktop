@@ -1,4 +1,4 @@
-package main.settings
+package main.settings.navigation
 
 import main.MainTab
 

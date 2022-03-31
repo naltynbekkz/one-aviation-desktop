@@ -8,7 +8,7 @@ import main.home.HomeTab
 import main.logs.navigation.LogsTab
 import main.profile.navigation.ProfileTab
 import main.service.ServiceTab
-import main.settings.SettingsTab
+import main.settings.navigation.SettingsTab
 import main.staff.StaffTab
 import main.statistics.StatisticsTab
 import main.storage.StorageTab

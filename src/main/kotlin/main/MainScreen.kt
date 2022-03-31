@@ -66,8 +66,8 @@ import main.service.services.ServicesNavigation
 import main.service.services.ServicesNavigationComponent
 import main.service.technologyMaps.TechnologyMapsNavigation
 import main.service.technologyMaps.TechnologyMapsNavigationComponent
-import main.settings.SettingsNavigation
-import main.settings.SettingsNavigationComponent
+import main.settings.navigation.SettingsNavigation
+import main.settings.navigation.SettingsNavigationComponent
 import main.staff.admins.navigation.AdminsNavigation
 import main.staff.admins.navigation.AdminsNavigationComponent
 import main.staff.masters.navigation.MastersNavigation
