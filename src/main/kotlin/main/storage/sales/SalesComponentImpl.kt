@@ -1,7 +1,7 @@
 package main.storage.sales
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class SalesComponentImpl(
-    componentContext: ComponentContext,
-) : SalesComponent, ComponentContext by componentContext
+class SalesComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

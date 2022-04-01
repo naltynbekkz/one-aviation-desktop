@@ -1,15 +1,15 @@
 package main.staff.masters.masters
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import core.Interactor.Companion.getInteractor
 import main.staff.masters.PlanesRepository
 
-class MastersComponentImpl(
-    componentContext: ComponentContext,
+class MastersComponent(
+    customComponentContext: CustomComponentContext,
     repository: PlanesRepository,
-) : MastersComponent, ComponentContext by componentContext {
+) : CustomComponentContext by customComponentContext {
 
-    override val list = getInteractor {
+    val list = getInteractor {
         repository.getPlanes()
     }
 

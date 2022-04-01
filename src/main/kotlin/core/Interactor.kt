@@ -1,6 +1,5 @@
 package core
 
-import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +14,8 @@ class Interactor<T>(
 ) {
 
     private val _isLoading = MutableStateFlow(true)
-    private val _response = MutableStateFlow<ResponseState.NetworkResponse<T>?>(initialValue?.let { ResponseState.NetworkResponse.Success(it) })
+    private val _response =
+        MutableStateFlow<ResponseState.NetworkResponse<T>?>(initialValue?.let { ResponseState.NetworkResponse.Success(it) })
     val isLoading = _isLoading.asStateFlow()
     val response = _response.asStateFlow()
 
@@ -43,7 +43,7 @@ class Interactor<T>(
     val data: T? get() = (response.value as? ResponseState.NetworkResponse.Success)?.data
 
     companion object {
-        fun <T> ComponentContext.getInteractor(
+        fun <T> CustomComponentContext.getInteractor(
             initialValue: T? = null,
             fetchData: suspend () -> ResponseState.NetworkResponse<T>,
         ) = Interactor(scope, initialValue, fetchData)

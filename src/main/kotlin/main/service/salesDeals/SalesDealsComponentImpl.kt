@@ -1,7 +1,7 @@
 package main.service.salesDeals
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class SalesDealsComponentImpl(
-    componentContext: ComponentContext,
-) : SalesDealsComponent, ComponentContext by componentContext
+class SalesDealsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

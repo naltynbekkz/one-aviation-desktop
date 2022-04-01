@@ -1,11 +1,23 @@
 package auth.signIn
 
-import core.Component
-import core.NullableInteractor
-import network.TokenResponse
+import auth.AuthRepository
+import core.CoreSettings
+import core.CustomComponentContext
+import core.NullableInteractor.Companion.getNullableInteractor
+import network.ResponseState
 
-interface SignInComponent : Component {
+class SignInComponent(
+    customComponentContext: CustomComponentContext,
+    repository: AuthRepository,
+    private val coreSettings: CoreSettings,
+) : CustomComponentContext by customComponentContext {
 
-    val signIn: NullableInteractor<TokenResponse, SignInRequest>
+    val signIn = getNullableInteractor { request: SignInRequest ->
+        val response = repository.signIn(request)
+        if (response is ResponseState.NetworkResponse.Success) {
+            coreSettings.setRefreshToken(response.data.uuid)
+        }
+        response
+    }
 
 }

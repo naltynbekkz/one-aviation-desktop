@@ -1,45 +1,47 @@
 package root
 
-import auth.AuthComponentImpl
-import com.arkivanov.decompose.ComponentContext
+import auth.AuthComponent
 import com.arkivanov.decompose.router.Router
-import com.arkivanov.decompose.router.RouterState
-import com.arkivanov.decompose.router.router
-import com.arkivanov.decompose.value.Value
-import core.Component
+import com.arkivanov.decompose.router.pop
 import core.CoreSettings
-import main.MainComponentImpl
+import core.CustomComponentContext
+import core.router
+import main.MainComponent
 import network.RepositoryProvider
 import settings.SettingsProvider
 import settings.get
 
-class RootComponentImpl(
+class RootComponent(
     private val repositoryProvider: RepositoryProvider,
     private val settingsProvider: SettingsProvider,
-    componentContext: ComponentContext,
-) : RootComponent, ComponentContext by componentContext {
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext {
 
-    override val refreshToken = settingsProvider.get<CoreSettings>().refreshToken
+    val refreshToken = settingsProvider.get<CoreSettings>().refreshToken
 
-    private val router: Router<RootDestination, Component> = router(
+    private val router: Router<RootDestination, CustomComponentContext> = router(
         initialConfiguration = if (refreshToken.value == null) RootDestination.Auth else RootDestination.Main,
         handleBackButton = true,
+        setNavigationResultAndNavigateUp = ::handleChildNavigationResult,
         childFactory = ::resolveChild
     )
-    override val routerState: Value<RouterState<RootDestination, Component>> = router.state
 
-    private fun resolveChild(mainDestination: RootDestination, componentContext: ComponentContext): Component =
+    private fun handleChildNavigationResult(args: Map<String, Any>) {
+        router.pop()
+    }
+
+    val routerState = router.state
+
+    private fun resolveChild(
+        mainDestination: RootDestination,
+        componentContext: CustomComponentContext,
+    ): CustomComponentContext =
         when (mainDestination) {
-            RootDestination.Auth -> AuthComponentImpl(componentContext, repositoryProvider, settingsProvider)
-            RootDestination.Main -> MainComponentImpl(repositoryProvider, settingsProvider, componentContext)
+            RootDestination.Auth -> AuthComponent(componentContext, repositoryProvider, settingsProvider)
+            RootDestination.Main -> MainComponent(repositoryProvider, settingsProvider, componentContext)
         }
 
-    override fun navigateToAuth() {
-        router.navigate { listOf(RootDestination.Auth) }
+    fun navigate(destination: RootDestination) {
+        router.navigate { listOf(destination) }
     }
-
-    override fun navigateToMain() {
-        router.navigate { listOf(RootDestination.Main) }
-    }
-
 }

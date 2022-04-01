@@ -1,36 +1,41 @@
 package main.help.feedback
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import com.arkivanov.decompose.router.Router
 import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.router.pop
-import com.arkivanov.decompose.router.router
+import core.router
 import com.arkivanov.decompose.value.Value
 import core.Component
 
-class FeedbackNavigationComponentImpl(
-    componentContext: ComponentContext,
-) : FeedbackNavigationComponent, ComponentContext by componentContext {
+class FeedbackNavigationComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext {
 
-    private val router: Router<FeedbackDestination, Component> = router(
+    private val router: Router<FeedbackDestination, CustomComponentContext> = router(
         initialConfiguration = FeedbackDestination.Feedback,
         handleBackButton = true,
+        setNavigationResultAndNavigateUp = ::handleChildNavigationResult,
         childFactory = { destination, componentContext ->
             when (destination) {
-                FeedbackDestination.Feedback -> FeedbackComponentImpl(componentContext)
+                FeedbackDestination.Feedback -> FeedbackComponent(componentContext)
             }
         }
     )
 
-    override val routerState: Value<RouterState<FeedbackDestination, Component>> = router.state
+    private fun handleChildNavigationResult(args: Map<String, Any>) {
 
-    override fun navigateToScreen(destination: FeedbackDestination) {
+    }
+    
+    val routerState = router.state
+
+    fun navigateToScreen(destination: FeedbackDestination) {
         router.navigate { list ->
             list + destination
         }
     }
 
-    override fun navigateUp() {
+    fun navigateUp() {
         router.pop()
     }
 

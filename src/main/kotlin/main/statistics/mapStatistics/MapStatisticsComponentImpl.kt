@@ -1,7 +1,7 @@
 package main.statistics.mapStatistics
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class MapStatisticsComponentImpl(
-    componentContext: ComponentContext,
-) : MapStatisticsComponent, ComponentContext by componentContext
+class MapStatisticsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

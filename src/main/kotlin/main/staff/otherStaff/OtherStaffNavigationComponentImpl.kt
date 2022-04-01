@@ -1,36 +1,41 @@
 package main.staff.otherStaff
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import com.arkivanov.decompose.router.Router
 import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.router.pop
-import com.arkivanov.decompose.router.router
+import core.router
 import com.arkivanov.decompose.value.Value
 import core.Component
 
-class OtherStaffNavigationComponentImpl(
-    componentContext: ComponentContext,
-) : OtherStaffNavigationComponent, ComponentContext by componentContext {
+class OtherStaffNavigationComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext {
 
-    private val router: Router<OtherStaffDestination, Component> = router(
+    private val router: Router<OtherStaffDestination, CustomComponentContext> = router(
         initialConfiguration = OtherStaffDestination.OtherStaff,
         handleBackButton = true,
+        setNavigationResultAndNavigateUp = ::handleChildNavigationResult,
         childFactory = { destination, componentContext ->
             when (destination) {
-                OtherStaffDestination.OtherStaff -> OtherStaffComponentImpl(componentContext)
+                OtherStaffDestination.OtherStaff -> OtherStaffComponent(componentContext)
             }
         }
     )
 
-    override val routerState: Value<RouterState<OtherStaffDestination, Component>> = router.state
+    private fun handleChildNavigationResult(args: Map<String, Any>) {
 
-    override fun navigateToScreen(destination: OtherStaffDestination) {
+    }
+    
+    val routerState = router.state
+
+    fun navigateToScreen(destination: OtherStaffDestination) {
         router.navigate { list ->
             list + destination
         }
     }
 
-    override fun navigateUp() {
+    fun navigateUp() {
         router.pop()
     }
 

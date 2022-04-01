@@ -20,8 +20,6 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.animation.child.crossfadeScale
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import core.hover
-import development.InDevelopment
-import development.InDevelopmentComponent
 import main.client.clients.ClientsNavigation
 import main.client.clients.ClientsNavigationComponent
 import main.client.feedback.ClientFeedbackNavigation
@@ -66,8 +64,8 @@ import main.service.services.ServicesNavigation
 import main.service.services.ServicesNavigationComponent
 import main.service.technologyMaps.TechnologyMapsNavigation
 import main.service.technologyMaps.TechnologyMapsNavigationComponent
-import main.settings.SettingsNavigation
-import main.settings.SettingsNavigationComponent
+import main.settings.navigation.SettingsNavigation
+import main.settings.navigation.SettingsNavigationComponent
 import main.staff.admins.navigation.AdminsNavigation
 import main.staff.admins.navigation.AdminsNavigationComponent
 import main.staff.masters.navigation.MastersNavigation
@@ -243,7 +241,6 @@ fun MainScreen(mainComponent: MainComponent) {
                     is DocumentationNavigationComponent -> DocumentationNavigation(component)
                     is VideoInstructionsNavigationComponent -> VideoInstructionsNavigation(component)
                     is ProfileNavigationComponent -> ProfileNavigation(component)
-                    is InDevelopmentComponent -> InDevelopment(component)
                 }
             }
         }

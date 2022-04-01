@@ -1,7 +1,7 @@
 package main.storage.revision
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class RevisionComponentImpl(
-    componentContext: ComponentContext,
-) : RevisionComponent, ComponentContext by componentContext
+class RevisionComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

@@ -1,5 +1,7 @@
 package auth.welcome
 
-import core.Component
+import core.CustomComponentContext
 
-interface WelcomeComponent : Component
+class WelcomeComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

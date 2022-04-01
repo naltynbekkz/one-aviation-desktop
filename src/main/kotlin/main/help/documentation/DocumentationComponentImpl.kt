@@ -1,7 +1,7 @@
 package main.help.documentation
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class DocumentationComponentImpl(
-    componentContext: ComponentContext,
-) : DocumentationComponent, ComponentContext by componentContext
+class DocumentationComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

@@ -1,7 +1,7 @@
 package main.statistics.marketplace
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class MarketplaceComponentImpl(
-    componentContext: ComponentContext,
-) : MarketplaceComponent, ComponentContext by componentContext
+class MarketplaceComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

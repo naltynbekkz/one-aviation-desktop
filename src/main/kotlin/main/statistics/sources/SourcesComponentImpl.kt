@@ -1,15 +1,15 @@
 package main.statistics.sources
 
 import androidx.compose.ui.graphics.Color
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import main.statistics.compose.BarChartEntry
 import main.statistics.compose.LineChartEntry
 
-class SourcesComponentImpl(
-    componentContext: ComponentContext,
-) : SourcesComponent, ComponentContext by componentContext {
+class SourcesComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext {
 
-    override val entries = listOf(
+    val entries = listOf(
         LineChartEntry(
             label = "рекомендации",
             Color(red = 111, green = 143, blue = 197),
@@ -32,7 +32,7 @@ class SourcesComponentImpl(
         ),
     )
 
-    override val revenue = listOf(
+    val revenue = listOf(
         BarChartEntry("2Гис", 25000f),
         BarChartEntry("Instagram", 30000f),
         BarChartEntry("ВКонтакте", 1000f),
@@ -43,7 +43,7 @@ class SourcesComponentImpl(
         BarChartEntry("Таргет", 0f),
     )
 
-    override val reservations = listOf(
+    val reservations = listOf(
         BarChartEntry("2Гис", 7f),
         BarChartEntry("Instagram", 10f),
         BarChartEntry("ВКонтакте", 4f),

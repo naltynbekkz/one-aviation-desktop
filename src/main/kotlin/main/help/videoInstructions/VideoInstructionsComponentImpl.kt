@@ -1,7 +1,7 @@
 package main.help.videoInstructions
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class VideoInstructionsComponentImpl(
-    componentContext: ComponentContext,
-) : VideoInstructionsComponent, ComponentContext by componentContext
+class VideoInstructionsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

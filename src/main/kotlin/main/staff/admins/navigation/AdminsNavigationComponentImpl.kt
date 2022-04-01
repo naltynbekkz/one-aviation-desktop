@@ -1,38 +1,36 @@
 package main.staff.admins.navigation
 
-import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.Router
-import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.router.pop
-import com.arkivanov.decompose.router.router
-import com.arkivanov.decompose.value.Value
-import core.Component
-import main.staff.admins.addAdmin.AddAdminComponentImpl
-import main.staff.admins.admin.AdminComponentImpl
-import main.staff.admins.admins.AdminsComponentImpl
+import core.CustomComponentContext
+import core.router
+import main.staff.admins.addAdmin.AddAdminComponent
+import main.staff.admins.admin.AdminComponent
+import main.staff.admins.admins.AdminsComponent
 import network.RepositoryProvider
 import network.get
 
-class AdminsNavigationComponentImpl(
-    componentContext: ComponentContext,
+class AdminsNavigationComponent(
+    customComponentContext: CustomComponentContext,
     repositoryProvider: RepositoryProvider,
-) : AdminsNavigationComponent, ComponentContext by componentContext {
+) : CustomComponentContext by customComponentContext {
 
-    private val router: Router<AdminsDestination, Component> = router(
+    private val router: Router<AdminsDestination, CustomComponentContext> = router(
         initialConfiguration = AdminsDestination.Admins,
         handleBackButton = true,
+        setNavigationResultAndNavigateUp = ::handleChildNavigationResult,
         childFactory = { destination, componentContext ->
             when (destination) {
-                AdminsDestination.Admins -> AdminsComponentImpl(
-                    componentContext = componentContext,
+                AdminsDestination.Admins -> AdminsComponent(
+                    customComponentContext = componentContext,
                     repository = repositoryProvider.get(),
                 )
-                AdminsDestination.AddAdmin -> AddAdminComponentImpl(
-                    componentContext = componentContext,
+                AdminsDestination.AddAdmin -> AddAdminComponent(
+                    customComponentContext = componentContext,
                     repository = repositoryProvider.get(),
                 )
-                is AdminsDestination.Admin -> AdminComponentImpl(
-                    componentContext = componentContext,
+                is AdminsDestination.Admin -> AdminComponent(
+                    customComponentContext = componentContext,
                     repository = repositoryProvider.get(),
                     id = destination.id
                 )
@@ -40,15 +38,19 @@ class AdminsNavigationComponentImpl(
         }
     )
 
-    override val routerState: Value<RouterState<AdminsDestination, Component>> = router.state
+    private fun handleChildNavigationResult(args: Map<String, Any>) {
 
-    override fun navigateToScreen(destination: AdminsDestination) {
+    }
+
+    val routerState = router.state
+
+    fun navigateToScreen(destination: AdminsDestination) {
         router.navigate { list ->
             list + destination
         }
     }
 
-    override fun navigateUp() {
+    fun navigateUp() {
         router.pop()
     }
 

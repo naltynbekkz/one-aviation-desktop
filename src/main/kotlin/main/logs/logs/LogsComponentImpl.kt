@@ -1,6 +1,6 @@
 package main.logs.logs
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import core.DateUtils
 import core.DateUtils.added
 import core.DependentInteractor.Companion.getDependentInteractor
@@ -12,17 +12,17 @@ import network.ResponseState
 import network.ResponseState.Companion.convert
 import java.util.*
 
-class LogsComponentImpl(
-    componentContext: ComponentContext,
+class LogsComponent(
+    customComponentContext: CustomComponentContext,
     repository: FlightsRepository,
-) : LogsComponent, ComponentContext by componentContext {
+) : CustomComponentContext by customComponentContext {
 
-    override val date = MutableStateFlow(DateUtils.getMidnight())
-    override fun setDate(calendar: Calendar) {
+    val date = MutableStateFlow(DateUtils.getMidnight())
+    fun setDate(calendar: Calendar) {
         date.value = calendar
     }
 
-    override val flights = getDependentInteractor(date) {
+    val flights = getDependentInteractor(date) {
         repository.getFlights(it.timeInMillis, it.added(days = 1).timeInMillis).convert {
             it.groupBy { it.plane }.map {
                 val flights = it.value.groupBy {
@@ -40,7 +40,7 @@ class LogsComponentImpl(
         }
     }
 
-    override val updateFlight = getNullableInteractor { pair: Pair<Long, FlightStatus> ->
+    val updateFlight = getNullableInteractor { pair: Pair<Long, FlightStatus> ->
         val response = repository.updateFlight(pair.first, pair.second)
         if (response is ResponseState.NetworkResponse.Success) {
             flights.refresh()

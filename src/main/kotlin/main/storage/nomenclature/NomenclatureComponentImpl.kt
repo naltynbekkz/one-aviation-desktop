@@ -1,7 +1,7 @@
 package main.storage.nomenclature
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class NomenclatureComponentImpl(
-    componentContext: ComponentContext,
-) : NomenclatureComponent, ComponentContext by componentContext
+class NomenclatureComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

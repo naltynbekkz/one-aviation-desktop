@@ -1,7 +1,7 @@
 package main.home
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class HomeComponentImpl(
-    componentContext: ComponentContext,
-) : HomeComponent, ComponentContext by componentContext
+class HomeComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

@@ -1,10 +1,10 @@
 package main.profile.changePassword
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class ChangePasswordComponentImpl(
-    componentContext: ComponentContext,
-) : ChangePasswordComponent, ComponentContext by componentContext {
+class ChangePasswordComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext {
 
 
 }

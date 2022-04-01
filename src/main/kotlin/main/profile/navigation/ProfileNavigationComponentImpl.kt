@@ -1,47 +1,53 @@
 package main.profile.navigation
 
-import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.Router
-import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.router.pop
-import com.arkivanov.decompose.router.router
-import com.arkivanov.decompose.value.Value
-import core.Component
-import main.profile.changePassword.ChangePasswordComponentImpl
-import main.profile.editProfile.EditProfileComponentImpl
-import main.profile.profile.ProfileComponentImpl
+import core.CustomComponentContext
+import core.router
+import main.profile.changePassword.ChangePasswordComponent
+import main.profile.editProfile.EditProfileComponent
+import main.profile.profile.ProfileComponent
 import network.RepositoryProvider
 import network.get
 import settings.SettingsProvider
 import settings.get
 
-class ProfileNavigationComponentImpl(
-    componentContext: ComponentContext,
+class ProfileNavigationComponent(
+    customComponentContext: CustomComponentContext,
     private val settingsProvider: SettingsProvider,
     private val repositoryProvider: RepositoryProvider,
-) : ProfileNavigationComponent, ComponentContext by componentContext {
+) : CustomComponentContext by customComponentContext {
 
-    private val router: Router<ProfileDestination, Component> = router(
+    private val router: Router<ProfileDestination, CustomComponentContext> = router(
         initialConfiguration = ProfileDestination.Profile,
         handleBackButton = true,
+        setNavigationResultAndNavigateUp = ::handleChildNavigationResult,
         childFactory = { destination, componentContext ->
             when (destination) {
-                ProfileDestination.Profile -> ProfileComponentImpl(componentContext, repositoryProvider.get(), settingsProvider.get())
-                ProfileDestination.ChangePassword -> ChangePasswordComponentImpl(componentContext)
-                ProfileDestination.EditProfile -> EditProfileComponentImpl(componentContext)
+                ProfileDestination.Profile -> ProfileComponent(
+                    componentContext,
+                    repositoryProvider.get(),
+                    settingsProvider.get()
+                )
+                ProfileDestination.ChangePassword -> ChangePasswordComponent(componentContext)
+                ProfileDestination.EditProfile -> EditProfileComponent(componentContext)
             }
         }
     )
 
-    override val routerState: Value<RouterState<ProfileDestination, Component>> = router.state
+    private fun handleChildNavigationResult(args: Map<String, Any>) {
 
-    override fun navigateToScreen(destination: ProfileDestination) {
+    }
+
+    val routerState = router.state
+
+    fun navigateToScreen(destination: ProfileDestination) {
         router.navigate { list ->
             list + destination
         }
     }
 
-    override fun navigateUp() {
+    fun navigateUp() {
         router.pop()
     }
 

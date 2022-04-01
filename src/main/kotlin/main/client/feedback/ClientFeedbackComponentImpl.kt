@@ -1,7 +1,7 @@
 package main.client.feedback
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class ClientFeedbackComponentImpl(
-    componentContext: ComponentContext,
-) : ClientFeedbackComponent, ComponentContext by componentContext
+class ClientFeedbackComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

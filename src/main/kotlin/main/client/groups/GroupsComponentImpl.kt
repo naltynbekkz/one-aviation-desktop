@@ -1,7 +1,7 @@
 package main.client.groups
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class GroupsComponentImpl(
-    componentContext: ComponentContext,
-) : GroupsComponent, ComponentContext by componentContext
+class GroupsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

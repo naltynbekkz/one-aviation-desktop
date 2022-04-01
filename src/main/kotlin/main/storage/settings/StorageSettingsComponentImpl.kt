@@ -1,7 +1,7 @@
 package main.storage.settings
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class StorageSettingsComponentImpl(
-    componentContext: ComponentContext,
-) : StorageSettingsComponent, ComponentContext by componentContext
+class StorageSettingsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

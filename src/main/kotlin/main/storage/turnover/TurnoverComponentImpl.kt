@@ -1,7 +1,7 @@
 package main.storage.turnover
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class TurnoverComponentImpl(
-    componentContext: ComponentContext,
-) : TurnoverComponent, ComponentContext by componentContext
+class TurnoverComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

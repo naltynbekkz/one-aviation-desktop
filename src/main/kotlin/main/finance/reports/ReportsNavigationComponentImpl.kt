@@ -1,36 +1,41 @@
 package main.finance.reports
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import com.arkivanov.decompose.router.Router
 import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.router.pop
-import com.arkivanov.decompose.router.router
+import core.router
 import com.arkivanov.decompose.value.Value
 import core.Component
 
-class ReportsNavigationComponentImpl(
-    componentContext: ComponentContext,
-) : ReportsNavigationComponent, ComponentContext by componentContext {
+class ReportsNavigationComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext {
 
-    private val router: Router<ReportsDestination, Component> = router(
+    private val router: Router<ReportsDestination, CustomComponentContext> = router(
         initialConfiguration = ReportsDestination.Reports,
         handleBackButton = true,
+        setNavigationResultAndNavigateUp = ::handleChildNavigationResult,
         childFactory = { destination, componentContext ->
             when (destination) {
-                ReportsDestination.Reports -> ReportsComponentImpl(componentContext)
+                ReportsDestination.Reports -> ReportsComponent(componentContext)
             }
         }
     )
 
-    override val routerState: Value<RouterState<ReportsDestination, Component>> = router.state
+    private fun handleChildNavigationResult(args: Map<String, Any>) {
 
-    override fun navigateToScreen(destination: ReportsDestination) {
+    }
+    
+    val routerState = router.state
+
+    fun navigateToScreen(destination: ReportsDestination) {
         router.navigate { list ->
             list + destination
         }
     }
 
-    override fun navigateUp() {
+    fun navigateUp() {
         router.pop()
     }
 

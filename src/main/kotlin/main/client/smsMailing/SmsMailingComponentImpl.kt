@@ -1,7 +1,7 @@
 package main.client.smsMailing
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class SmsMailingComponentImpl(
-    componentContext: ComponentContext,
-) : SmsMailingComponent, ComponentContext by componentContext
+class SmsMailingComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

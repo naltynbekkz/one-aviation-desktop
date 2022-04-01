@@ -1,36 +1,41 @@
 package main.storage.storageReport
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import com.arkivanov.decompose.router.Router
 import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.router.pop
-import com.arkivanov.decompose.router.router
+import core.router
 import com.arkivanov.decompose.value.Value
 import core.Component
 
-class StorageReportNavigationComponentImpl(
-    componentContext: ComponentContext,
-) : StorageReportNavigationComponent, ComponentContext by componentContext {
+class StorageReportNavigationComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext {
 
-    private val router: Router<StorageReportDestination, Component> = router(
+    private val router: Router<StorageReportDestination, CustomComponentContext> = router(
         initialConfiguration = StorageReportDestination.StorageReport,
         handleBackButton = true,
+        setNavigationResultAndNavigateUp = ::handleChildNavigationResult,
         childFactory = { destination, componentContext ->
             when (destination) {
-                StorageReportDestination.StorageReport -> StorageReportComponentImpl(componentContext)
+                StorageReportDestination.StorageReport -> StorageReportComponent(componentContext)
             }
         }
     )
 
-    override val routerState: Value<RouterState<StorageReportDestination, Component>> = router.state
+    private fun handleChildNavigationResult(args: Map<String, Any>) {
 
-    override fun navigateToScreen(destination: StorageReportDestination) {
+    }
+    
+    val routerState = router.state
+
+    fun navigateToScreen(destination: StorageReportDestination) {
         router.navigate { list ->
             list + destination
         }
     }
 
-    override fun navigateUp() {
+    fun navigateUp() {
         router.pop()
     }
 

@@ -1,7 +1,7 @@
 package main.finance.expense
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class ExpenseComponentImpl(
-    componentContext: ComponentContext,
-) : ExpenseComponent, ComponentContext by componentContext
+class ExpenseComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

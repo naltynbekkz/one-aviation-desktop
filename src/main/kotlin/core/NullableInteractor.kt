@@ -1,6 +1,5 @@
 package core
 
-import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -56,7 +55,7 @@ class NullableInteractor<T, S>(
     val data: T? get() = (response.value as? ResponseState.NetworkResponse.Success)?.data
 
     companion object {
-        fun <T, S> ComponentContext.getNullableInteractor(
+        fun <T, S> CustomComponentContext.getNullableInteractor(
             fetchData: suspend (S) -> ResponseState.NetworkResponse<T>,
         ) = NullableInteractor(scope, fetchData)
     }

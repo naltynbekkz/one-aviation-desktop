@@ -1,33 +1,31 @@
 package main.logs.navigation
 
-import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.Router
-import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.router.pop
-import com.arkivanov.decompose.router.router
-import com.arkivanov.decompose.value.Value
-import core.Component
-import main.logs.logs.LogsComponentImpl
-import main.logs.reservation.ReservationComponentImpl
+import core.CustomComponentContext
+import core.router
+import main.logs.logs.LogsComponent
+import main.logs.reservation.ReservationComponent
 import network.RepositoryProvider
 import network.get
 
-class LogsNavigationComponentImpl(
-    componentContext: ComponentContext,
+class LogsNavigationComponent(
+    customComponentContext: CustomComponentContext,
     repositoryProvider: RepositoryProvider,
-) : LogsNavigationComponent, ComponentContext by componentContext {
+) : CustomComponentContext by customComponentContext {
 
-    private val router: Router<LogsDestination, Component> = router(
+    private val router: Router<LogsDestination, CustomComponentContext> = router(
         initialConfiguration = LogsDestination.Logs,
         handleBackButton = true,
+        setNavigationResultAndNavigateUp = ::handleChildNavigationResult,
         childFactory = { destination, componentContext ->
             when (destination) {
-                LogsDestination.Logs -> LogsComponentImpl(
-                    componentContext = componentContext,
+                LogsDestination.Logs -> LogsComponent(
+                    customComponentContext = componentContext,
                     repository = repositoryProvider.get(),
                 )
-                is LogsDestination.Reservation -> ReservationComponentImpl(
-                    componentContext = componentContext,
+                is LogsDestination.Reservation -> ReservationComponent(
+                    customComponentContext = componentContext,
                     id = destination.id,
                     repository = repositoryProvider.get(),
                 )
@@ -35,15 +33,19 @@ class LogsNavigationComponentImpl(
         }
     )
 
-    override val routerState: Value<RouterState<LogsDestination, Component>> = router.state
+    private fun handleChildNavigationResult(args: Map<String, Any>) {
 
-    override fun navigateToScreen(destination: LogsDestination) {
+    }
+
+    val routerState = router.state
+
+    fun navigateToScreen(destination: LogsDestination) {
         router.navigate { list ->
             list + destination
         }
     }
 
-    override fun navigateUp() {
+    fun navigateUp() {
         router.pop()
     }
 

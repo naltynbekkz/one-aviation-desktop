@@ -1,7 +1,7 @@
 package main.finance.reports
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class ReportsComponentImpl(
-    componentContext: ComponentContext,
-) : ReportsComponent, ComponentContext by componentContext
+class ReportsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

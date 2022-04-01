@@ -1,7 +1,7 @@
 package main.client.loyalties
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class LoyaltiesComponentImpl(
-    componentContext: ComponentContext,
-) : LoyaltiesComponent, ComponentContext by componentContext
+class LoyaltiesComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

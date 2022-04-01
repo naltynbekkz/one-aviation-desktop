@@ -1,16 +1,16 @@
 package main.logs.reservation
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import core.Interactor.Companion.getInteractor
 import main.logs.FlightsRepository
 
-class ReservationComponentImpl(
-    componentContext: ComponentContext,
+class ReservationComponent(
+    customComponentContext: CustomComponentContext,
     private val id: Long,
     repository: FlightsRepository,
-) : ReservationComponent, ComponentContext by componentContext {
+) : CustomComponentContext by customComponentContext {
 
-    override val flight = getInteractor {
+    val flight = getInteractor {
         repository.getFlight(id)
     }
 

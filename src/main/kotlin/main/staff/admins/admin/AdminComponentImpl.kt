@@ -1,23 +1,23 @@
 package main.staff.admins.admin
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import core.Interactor.Companion.getInteractor
 import core.NullableInteractor.Companion.getNullableInteractor
 import main.staff.admins.AdminRepository
 import main.staff.admins.addAdmin.RegistrationRequest
 import main.staff.masters.master.EditPlaneRequest
 
-class AdminComponentImpl(
-    componentContext: ComponentContext,
+class AdminComponent(
+    customComponentContext: CustomComponentContext,
     repository: AdminRepository,
     private val id: Long,
-) : AdminComponent, ComponentContext by componentContext {
+) : CustomComponentContext by customComponentContext {
 
-    override val admin = getInteractor {
+    val admin = getInteractor {
         repository.getAdmin(id)
     }
 
-    override val edit = getNullableInteractor { pair: Pair<Long, RegistrationRequest> ->
+    val edit = getNullableInteractor { pair: Pair<Long, RegistrationRequest> ->
         repository.editAdmin(pair.first, pair.second)
     }
 

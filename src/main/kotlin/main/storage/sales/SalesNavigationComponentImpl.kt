@@ -1,36 +1,41 @@
 package main.storage.sales
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import com.arkivanov.decompose.router.Router
 import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.router.pop
-import com.arkivanov.decompose.router.router
+import core.router
 import com.arkivanov.decompose.value.Value
 import core.Component
 
-class SalesNavigationComponentImpl(
-    componentContext: ComponentContext,
-) : SalesNavigationComponent, ComponentContext by componentContext {
+class SalesNavigationComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext {
 
-    private val router: Router<SalesDestination, Component> = router(
+    private val router: Router<SalesDestination, CustomComponentContext> = router(
         initialConfiguration = SalesDestination.Sales,
         handleBackButton = true,
+        setNavigationResultAndNavigateUp = ::handleChildNavigationResult,
         childFactory = { destination, componentContext ->
             when (destination) {
-                SalesDestination.Sales -> SalesComponentImpl(componentContext)
+                SalesDestination.Sales -> SalesComponent(componentContext)
             }
         }
     )
 
-    override val routerState: Value<RouterState<SalesDestination, Component>> = router.state
+    private fun handleChildNavigationResult(args: Map<String, Any>) {
 
-    override fun navigateToScreen(destination: SalesDestination) {
+    }
+    
+    val routerState = router.state
+
+    fun navigateToScreen(destination: SalesDestination) {
         router.navigate { list ->
             list + destination
         }
     }
 
-    override fun navigateUp() {
+    fun navigateUp() {
         router.pop()
     }
 

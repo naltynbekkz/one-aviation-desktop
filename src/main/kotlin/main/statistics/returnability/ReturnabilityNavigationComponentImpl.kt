@@ -1,36 +1,41 @@
 package main.statistics.returnability
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import com.arkivanov.decompose.router.Router
 import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.router.pop
-import com.arkivanov.decompose.router.router
+import core.router
 import com.arkivanov.decompose.value.Value
 import core.Component
 
-class ReturnabilityNavigationComponentImpl(
-    componentContext: ComponentContext,
-) : ReturnabilityNavigationComponent, ComponentContext by componentContext {
+class ReturnabilityNavigationComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext {
 
-    private val router: Router<ReturnabilityDestination, Component> = router(
+    private val router: Router<ReturnabilityDestination, CustomComponentContext> = router(
         initialConfiguration = ReturnabilityDestination.Returnability,
         handleBackButton = true,
+        setNavigationResultAndNavigateUp = ::handleChildNavigationResult,
         childFactory = { destination, componentContext ->
             when (destination) {
-                ReturnabilityDestination.Returnability -> ReturnabilityComponentImpl(componentContext)
+                ReturnabilityDestination.Returnability -> ReturnabilityComponent(componentContext)
             }
         }
     )
 
-    override val routerState: Value<RouterState<ReturnabilityDestination, Component>> = router.state
+    private fun handleChildNavigationResult(args: Map<String, Any>) {
 
-    override fun navigateToScreen(destination: ReturnabilityDestination) {
+    }
+    
+    val routerState = router.state
+
+    fun navigateToScreen(destination: ReturnabilityDestination) {
         router.navigate { list ->
             list + destination
         }
     }
 
-    override fun navigateUp() {
+    fun navigateUp() {
         router.pop()
     }
 

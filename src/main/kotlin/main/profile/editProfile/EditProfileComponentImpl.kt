@@ -1,9 +1,9 @@
 package main.profile.editProfile
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class EditProfileComponentImpl(
-    componentContext: ComponentContext
-) : EditProfileComponent, ComponentContext by componentContext {
+class EditProfileComponent(
+    componentContext: CustomComponentContext,
+) : CustomComponentContext by componentContext {
 
 }

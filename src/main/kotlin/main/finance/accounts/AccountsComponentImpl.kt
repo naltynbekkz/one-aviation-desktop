@@ -1,7 +1,7 @@
 package main.finance.accounts
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class AccountsComponentImpl(
-    componentContext: ComponentContext,
-) : AccountsComponent, ComponentContext by componentContext
+class AccountsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

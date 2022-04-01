@@ -1,7 +1,7 @@
 package main.finance.income
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class IncomeComponentImpl(
-    componentContext: ComponentContext,
-) : IncomeComponent, ComponentContext by componentContext
+class IncomeComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

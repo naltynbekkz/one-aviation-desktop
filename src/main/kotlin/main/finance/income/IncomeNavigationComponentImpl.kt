@@ -1,36 +1,41 @@
 package main.finance.income
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import com.arkivanov.decompose.router.Router
 import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.router.pop
-import com.arkivanov.decompose.router.router
+import core.router
 import com.arkivanov.decompose.value.Value
 import core.Component
 
-class IncomeNavigationComponentImpl(
-    componentContext: ComponentContext,
-) : IncomeNavigationComponent, ComponentContext by componentContext {
+class IncomeNavigationComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext {
 
-    private val router: Router<IncomeDestination, Component> = router(
+    private val router: Router<IncomeDestination, CustomComponentContext> = router(
         initialConfiguration = IncomeDestination.Income,
         handleBackButton = true,
+        setNavigationResultAndNavigateUp = ::handleChildNavigationResult,
         childFactory = { destination, componentContext ->
             when (destination) {
-                IncomeDestination.Income -> IncomeComponentImpl(componentContext)
+                IncomeDestination.Income -> IncomeComponent(componentContext)
             }
         }
     )
 
-    override val routerState: Value<RouterState<IncomeDestination, Component>> = router.state
+    private fun handleChildNavigationResult(args: Map<String, Any>) {
 
-    override fun navigateToScreen(destination: IncomeDestination) {
+    }
+    
+    val routerState = router.state
+
+    fun navigateToScreen(destination: IncomeDestination) {
         router.navigate { list ->
             list + destination
         }
     }
 
-    override fun navigateUp() {
+    fun navigateUp() {
         router.pop()
     }
 

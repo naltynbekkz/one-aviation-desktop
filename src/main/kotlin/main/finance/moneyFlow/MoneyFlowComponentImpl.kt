@@ -1,7 +1,7 @@
 package main.finance.moneyFlow
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class MoneyFlowComponentImpl(
-    componentContext: ComponentContext,
-) : MoneyFlowComponent, ComponentContext by componentContext
+class MoneyFlowComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

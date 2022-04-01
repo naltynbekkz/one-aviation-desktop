@@ -1,36 +1,41 @@
 package main.service.salesDeals
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import com.arkivanov.decompose.router.Router
 import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.router.pop
-import com.arkivanov.decompose.router.router
+import core.router
 import com.arkivanov.decompose.value.Value
 import core.Component
 
-class SalesDealsNavigationComponentImpl(
-    componentContext: ComponentContext,
-) : SalesDealsNavigationComponent, ComponentContext by componentContext {
+class SalesDealsNavigationComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext {
 
-    private val router: Router<SalesDealsDestination, Component> = router(
+    private val router: Router<SalesDealsDestination, CustomComponentContext> = router(
         initialConfiguration = SalesDealsDestination.SalesDeals,
         handleBackButton = true,
+        setNavigationResultAndNavigateUp = ::handleChildNavigationResult,
         childFactory = { destination, componentContext ->
             when (destination) {
-                SalesDealsDestination.SalesDeals -> SalesDealsComponentImpl(componentContext)
+                SalesDealsDestination.SalesDeals -> SalesDealsComponent(componentContext)
             }
         }
     )
 
-    override val routerState: Value<RouterState<SalesDealsDestination, Component>> = router.state
+    private fun handleChildNavigationResult(args: Map<String, Any>) {
 
-    override fun navigateToScreen(destination: SalesDealsDestination) {
+    }
+    
+    val routerState = router.state
+
+    fun navigateToScreen(destination: SalesDealsDestination) {
         router.navigate { list ->
             list + destination
         }
     }
 
-    override fun navigateUp() {
+    fun navigateUp() {
         router.pop()
     }
 

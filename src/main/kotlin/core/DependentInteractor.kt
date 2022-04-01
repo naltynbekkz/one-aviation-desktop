@@ -1,6 +1,5 @@
 package core
 
-import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
@@ -50,7 +49,7 @@ class DependentInteractor<T, S>(
     val data: T? get() = (response.value as? ResponseState.NetworkResponse.Success)?.data
 
     companion object {
-        fun <T, S> ComponentContext.getDependentInteractor(
+        fun <T, S> CustomComponentContext.getDependentInteractor(
             flow: Flow<S>,
             fetchData: suspend (S) -> ResponseState.NetworkResponse<T>,
         ) = DependentInteractor(scope, flow, fetchData)

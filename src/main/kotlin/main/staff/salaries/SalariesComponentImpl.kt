@@ -1,7 +1,7 @@
 package main.staff.salaries
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class SalariesComponentImpl(
-    componentContext: ComponentContext,
-) : SalariesComponent, ComponentContext by componentContext
+class SalariesComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext
