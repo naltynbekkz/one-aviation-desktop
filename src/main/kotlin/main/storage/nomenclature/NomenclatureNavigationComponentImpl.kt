@@ -1,36 +1,41 @@
 package main.storage.nomenclature
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import com.arkivanov.decompose.router.Router
 import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.router.pop
-import com.arkivanov.decompose.router.router
+import core.router
 import com.arkivanov.decompose.value.Value
 import core.Component
 
-class NomenclatureNavigationComponentImpl(
-    componentContext: ComponentContext,
-) : NomenclatureNavigationComponent, ComponentContext by componentContext {
+class NomenclatureNavigationComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext {
 
-    private val router: Router<NomenclatureDestination, Component> = router(
+    private val router: Router<NomenclatureDestination, CustomComponentContext> = router(
         initialConfiguration = NomenclatureDestination.Nomenclature,
         handleBackButton = true,
+        setNavigationResultAndNavigateUp = ::handleChildNavigationResult,
         childFactory = { destination, componentContext ->
             when (destination) {
-                NomenclatureDestination.Nomenclature -> NomenclatureComponentImpl(componentContext)
+                NomenclatureDestination.Nomenclature -> NomenclatureComponent(componentContext)
             }
         }
     )
 
-    override val routerState: Value<RouterState<NomenclatureDestination, Component>> = router.state
+    private fun handleChildNavigationResult(args: Map<String, Any>) {
 
-    override fun navigateToScreen(destination: NomenclatureDestination) {
+    }
+    
+    val routerState = router.state
+
+    fun navigateToScreen(destination: NomenclatureDestination) {
         router.navigate { list ->
             list + destination
         }
     }
 
-    override fun navigateUp() {
+    fun navigateUp() {
         router.pop()
     }
 

@@ -1,7 +1,7 @@
 package main.service.technologyMaps
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class TechnologyMapsComponentImpl(
-    componentContext: ComponentContext,
-) : TechnologyMapsComponent, ComponentContext by componentContext
+class TechnologyMapsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

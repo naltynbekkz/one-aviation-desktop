@@ -18,7 +18,7 @@ import main.settings.navigation.SettingsDestination
 
 @Composable
 fun SettingsScreen(
-    settingsComponent: SettingsComponentImpl,
+    settingsComponent: SettingsComponent,
     navigate: (SettingsDestination) -> Unit,
 ) {
 
@@ -30,13 +30,18 @@ fun SettingsScreen(
 
     LaunchedEffect(navigationResult) {
         if (navigationResult.isNotConsumed()) {
-            val result = scaffoldState.snackbarHostState.showSnackbar("asdf")
-            when (result) {
-                SnackbarResult.Dismissed -> {
 
-                }
-                SnackbarResult.ActionPerformed -> {
+            navigationResult!!.args.entries.forEach { (key, value) ->
+                if (value as? Boolean == true) {
+                    val result = scaffoldState.snackbarHostState.showSnackbar("asdf")
+                    when (result) {
+                        SnackbarResult.Dismissed -> {
 
+                        }
+                        SnackbarResult.ActionPerformed -> {
+
+                        }
+                    }
                 }
             }
         }

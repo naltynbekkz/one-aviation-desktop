@@ -1,36 +1,41 @@
 package main.finance.accounts
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import com.arkivanov.decompose.router.Router
 import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.router.pop
-import com.arkivanov.decompose.router.router
+import core.router
 import com.arkivanov.decompose.value.Value
 import core.Component
 
-class AccountsNavigationComponentImpl(
-    componentContext: ComponentContext,
-) : AccountsNavigationComponent, ComponentContext by componentContext {
+class AccountsNavigationComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext {
 
-    private val router: Router<AccountsDestination, Component> = router(
+    private val router: Router<AccountsDestination, CustomComponentContext> = router(
         initialConfiguration = AccountsDestination.Accounts,
         handleBackButton = true,
+        setNavigationResultAndNavigateUp = ::handleChildNavigationResult,
         childFactory = { destination, componentContext ->
             when (destination) {
-                AccountsDestination.Accounts -> AccountsComponentImpl(componentContext)
+                AccountsDestination.Accounts -> AccountsComponent(componentContext)
             }
         }
     )
 
-    override val routerState: Value<RouterState<AccountsDestination, Component>> = router.state
+    private fun handleChildNavigationResult(args: Map<String, Any>) {
 
-    override fun navigateToScreen(destination: AccountsDestination) {
+    }
+    
+    val routerState = router.state
+
+    fun navigateToScreen(destination: AccountsDestination) {
         router.navigate { list ->
             list + destination
         }
     }
 
-    override fun navigateUp() {
+    fun navigateUp() {
         router.pop()
     }
 

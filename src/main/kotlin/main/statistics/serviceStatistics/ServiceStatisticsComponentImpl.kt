@@ -1,7 +1,7 @@
 package main.statistics.serviceStatistics
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class ServiceStatisticsComponentImpl(
-    componentContext: ComponentContext,
-) : ServiceStatisticsComponent, ComponentContext by componentContext
+class ServiceStatisticsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

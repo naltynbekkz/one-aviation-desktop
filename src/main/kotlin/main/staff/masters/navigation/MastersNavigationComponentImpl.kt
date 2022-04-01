@@ -1,54 +1,56 @@
 package main.staff.masters.navigation
 
-import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.Router
-import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.router.pop
-import com.arkivanov.decompose.router.router
-import com.arkivanov.decompose.value.Value
-import core.Component
-import main.staff.masters.masters.MastersComponentImpl
-import main.staff.masters.addMaster.AddMasterComponentImpl
-import main.staff.masters.master.MasterComponentImpl
+import core.CustomComponentContext
+import core.router
+import main.staff.masters.addMaster.AddMasterComponent
+import main.staff.masters.master.MasterComponent
+import main.staff.masters.masters.MastersComponent
 import network.RepositoryProvider
 import network.get
 
-class MastersNavigationComponentImpl(
-    componentContext: ComponentContext,
+class MastersNavigationComponent(
+    customComponentContext: CustomComponentContext,
     repositoryProvider: RepositoryProvider,
-) : MastersNavigationComponent, ComponentContext by componentContext {
+) : CustomComponentContext by customComponentContext {
 
-    private val router: Router<MastersDestination, Component> = router(
+    private val router: Router<MastersDestination, CustomComponentContext> = router(
         initialConfiguration = MastersDestination.Masters,
         handleBackButton = true,
+        setNavigationResultAndNavigateUp = ::handleChildNavigationResult,
         childFactory = { destination, componentContext ->
             when (destination) {
-                MastersDestination.Masters -> MastersComponentImpl(
-                    componentContext = componentContext,
+                MastersDestination.Masters -> MastersComponent(
+                    customComponentContext = componentContext,
                     repository = repositoryProvider.get()
                 )
-                is MastersDestination.Master -> MasterComponentImpl(
-                    componentContext = componentContext,
+                is MastersDestination.Master -> MasterComponent(
+                    customComponentContext = componentContext,
                     repository = repositoryProvider.get(),
                     id = destination.id,
                 )
-                MastersDestination.AddMaster -> AddMasterComponentImpl(
-                    componentContext = componentContext,
+                MastersDestination.AddMaster -> AddMasterComponent(
+                    customComponentContext = componentContext,
                     repository = repositoryProvider.get()
                 )
             }
         }
     )
 
-    override val routerState: Value<RouterState<MastersDestination, Component>> = router.state
+    private fun handleChildNavigationResult(args: Map<String, Any>) {
 
-    override fun navigateToScreen(destination: MastersDestination) {
+    }
+
+    val routerState = router.state
+
+    fun navigateToScreen(destination: MastersDestination) {
         router.navigate { list ->
             list + destination
         }
     }
 
-    override fun navigateUp() {
+    fun navigateUp() {
         router.pop()
     }
 

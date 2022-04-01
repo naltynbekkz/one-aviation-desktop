@@ -20,8 +20,6 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.animation.child.crossfadeScale
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import core.hover
-import development.InDevelopment
-import development.InDevelopmentComponent
 import main.client.clients.ClientsNavigation
 import main.client.clients.ClientsNavigationComponent
 import main.client.feedback.ClientFeedbackNavigation
@@ -243,7 +241,6 @@ fun MainScreen(mainComponent: MainComponent) {
                     is DocumentationNavigationComponent -> DocumentationNavigation(component)
                     is VideoInstructionsNavigationComponent -> VideoInstructionsNavigation(component)
                     is ProfileNavigationComponent -> ProfileNavigation(component)
-                    is InDevelopmentComponent -> InDevelopment(component)
                 }
             }
         }

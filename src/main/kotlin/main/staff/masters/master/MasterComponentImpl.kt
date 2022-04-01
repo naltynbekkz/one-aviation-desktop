@@ -1,6 +1,6 @@
 package main.staff.masters.master
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import core.Interactor.Companion.getInteractor
 import core.NullableInteractor
 import core.NullableInteractor.Companion.getNullableInteractor
@@ -9,17 +9,17 @@ import main.staff.masters.PlanesRepository
 import main.staff.masters.addMaster.CreatePlaneRequest
 import main.staff.masters.data.Plane
 
-class MasterComponentImpl(
-    componentContext: ComponentContext,
+class MasterComponent(
+    customComponentContext: CustomComponentContext,
     repository: PlanesRepository,
     private val id: Long,
-) : MasterComponent, ComponentContext by componentContext {
+) : CustomComponentContext by customComponentContext {
 
-    override val plane = getInteractor {
+    val plane = getInteractor {
         repository.getPlane(id)
     }
 
-    override val edit = getNullableInteractor { pair: Pair<Long, EditPlaneRequest> ->
+    val edit = getNullableInteractor { pair: Pair<Long, EditPlaneRequest> ->
         repository.editPlane(pair.first, pair.second)
     }
 }

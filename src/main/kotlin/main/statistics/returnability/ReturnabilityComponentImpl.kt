@@ -1,7 +1,7 @@
 package main.statistics.returnability
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class ReturnabilityComponentImpl(
-    componentContext: ComponentContext,
-) : ReturnabilityComponent, ComponentContext by componentContext
+class ReturnabilityComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

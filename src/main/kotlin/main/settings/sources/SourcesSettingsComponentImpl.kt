@@ -1,7 +1,7 @@
 package main.settings.sources
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class SourcesSettingsComponentImpl(
-    componentContext: ComponentContext,
-) : SourcesSettingsComponent, ComponentContext by componentContext
+class SourcesSettingsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

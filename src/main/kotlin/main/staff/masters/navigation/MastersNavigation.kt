@@ -9,14 +9,12 @@ import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import core.slideFade
-import main.staff.admins.admin.AdminComponent
-import main.staff.admins.admin.AdminScreen
-import main.staff.masters.masters.MastersComponent
 import main.staff.masters.masters.MastersScreen
 import main.staff.masters.addMaster.AddMasterComponent
 import main.staff.masters.addMaster.AddMasterScreen
 import main.staff.masters.master.MasterComponent
 import main.staff.masters.master.MasterScreen
+import main.staff.masters.masters.MastersComponent
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable

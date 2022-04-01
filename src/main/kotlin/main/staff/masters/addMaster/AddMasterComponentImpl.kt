@@ -1,16 +1,16 @@
 package main.staff.masters.addMaster
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import core.NullableInteractor.Companion.getNullableInteractor
 import main.staff.masters.PlanesRepository
 import network.ResponseState
 
-class AddMasterComponentImpl(
-    componentContext: ComponentContext,
+class AddMasterComponent(
+    customComponentContext: CustomComponentContext,
     repository: PlanesRepository,
-) : AddMasterComponent, ComponentContext by componentContext {
+) : CustomComponentContext by customComponentContext {
 
-    override val addMaster = getNullableInteractor { request: CreatePlaneRequest ->
+    val addMaster = getNullableInteractor { request: CreatePlaneRequest ->
         repository.addPlane(request)
     }
 

@@ -1,7 +1,7 @@
 package main.staff.workingHours
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class WorkingHoursComponentImpl(
-    componentContext: ComponentContext,
-) : WorkingHoursComponent, ComponentContext by componentContext
+class WorkingHoursComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

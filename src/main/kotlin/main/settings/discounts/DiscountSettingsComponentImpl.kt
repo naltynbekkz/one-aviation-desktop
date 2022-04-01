@@ -1,7 +1,7 @@
 package main.settings.discounts
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class DiscountSettingsComponentImpl(
-    componentContext: ComponentContext,
-) : DiscountSettingsComponent, ComponentContext by componentContext
+class DiscountSettingsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

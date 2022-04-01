@@ -1,36 +1,41 @@
 package main.help.videoInstructions
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import com.arkivanov.decompose.router.Router
 import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.router.pop
-import com.arkivanov.decompose.router.router
+import core.router
 import com.arkivanov.decompose.value.Value
 import core.Component
 
-class VideoInstructionsNavigationComponentImpl(
-    componentContext: ComponentContext,
-) : VideoInstructionsNavigationComponent, ComponentContext by componentContext {
+class VideoInstructionsNavigationComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext {
 
-    private val router: Router<VideoInstructionsDestination, Component> = router(
+    private val router: Router<VideoInstructionsDestination, CustomComponentContext> = router(
         initialConfiguration = VideoInstructionsDestination.VideoInstructions,
         handleBackButton = true,
+        setNavigationResultAndNavigateUp = ::handleChildNavigationResult,
         childFactory = { destination, componentContext ->
             when (destination) {
-                VideoInstructionsDestination.VideoInstructions -> VideoInstructionsComponentImpl(componentContext)
+                VideoInstructionsDestination.VideoInstructions -> VideoInstructionsComponent(componentContext)
             }
         }
     )
 
-    override val routerState: Value<RouterState<VideoInstructionsDestination, Component>> = router.state
+    private fun handleChildNavigationResult(args: Map<String, Any>) {
 
-    override fun navigateToScreen(destination: VideoInstructionsDestination) {
+    }
+    
+    val routerState = router.state
+
+    fun navigateToScreen(destination: VideoInstructionsDestination) {
         router.navigate { list ->
             list + destination
         }
     }
 
-    override fun navigateUp() {
+    fun navigateUp() {
         router.pop()
     }
 

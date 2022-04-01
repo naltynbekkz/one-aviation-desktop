@@ -1,7 +1,7 @@
 package main.client.notifications
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class NotificationsComponentImpl(
-    componentContext: ComponentContext,
-) : NotificationsComponent, ComponentContext by componentContext
+class NotificationsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

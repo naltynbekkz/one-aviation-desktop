@@ -1,7 +1,7 @@
 package main.settings.billing
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class BillingComponentImpl(
-    componentContext: ComponentContext,
-) : BillingComponent, ComponentContext by componentContext
+class BillingComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

@@ -1,5 +1,7 @@
 package main.client.clients
 
-import core.Component
+import core.CustomComponentContext
 
-interface ClientsComponent : Component
+class ClientsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

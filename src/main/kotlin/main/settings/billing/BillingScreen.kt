@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BillingScreen(
     component: BillingComponent,
@@ -64,7 +65,9 @@ fun BillingScreen(
                 Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
                     repeat(4) {
                         Card(
-
+                            onClick = {
+                                component.setNavigationResultAndNavigateUp(mapOf("result" to true))
+                            }
                         ) {
                             Column(
                                 modifier = Modifier.width(IntrinsicSize.Max),

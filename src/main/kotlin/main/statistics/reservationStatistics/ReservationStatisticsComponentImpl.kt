@@ -1,12 +1,12 @@
 package main.statistics.reservationStatistics
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import main.statistics.compose.HorizontalBarChartEntry
 
-class ReservationStatisticsComponentImpl(
-    componentContext: ComponentContext,
-) : ReservationStatisticsComponent, ComponentContext by componentContext {
-    override val mastersRevenueEntries = listOf(
+class ReservationStatisticsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext {
+    val mastersRevenueEntries = listOf(
         HorizontalBarChartEntry(
             label = "Камилла",
             value = 11400f,
@@ -21,7 +21,7 @@ class ReservationStatisticsComponentImpl(
         ),
     )
 
-    override val mastersReservationsEntries = listOf(
+    val mastersReservationsEntries = listOf(
         HorizontalBarChartEntry(
             label = "Камилла",
             value = 3f,

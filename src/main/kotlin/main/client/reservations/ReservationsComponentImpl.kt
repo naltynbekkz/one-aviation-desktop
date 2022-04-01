@@ -1,7 +1,7 @@
 package main.client.reservations
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class ReservationsComponentImpl(
-    componentContext: ComponentContext,
-) : ReservationsComponent, ComponentContext by componentContext
+class ReservationsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

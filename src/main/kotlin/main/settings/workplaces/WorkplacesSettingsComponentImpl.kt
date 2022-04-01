@@ -1,7 +1,7 @@
 package main.settings.workplaces
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class WorkplacesSettingsComponentImpl(
-    componentContext: ComponentContext,
-) : WorkplacesSettingsComponent, ComponentContext by componentContext
+class WorkplacesSettingsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

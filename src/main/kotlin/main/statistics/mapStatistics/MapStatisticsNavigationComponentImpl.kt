@@ -1,36 +1,41 @@
 package main.statistics.mapStatistics
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import com.arkivanov.decompose.router.Router
 import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.router.pop
-import com.arkivanov.decompose.router.router
+import core.router
 import com.arkivanov.decompose.value.Value
 import core.Component
 
-class MapStatisticsNavigationComponentImpl(
-    componentContext: ComponentContext,
-) : MapStatisticsNavigationComponent, ComponentContext by componentContext {
+class MapStatisticsNavigationComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext {
 
-    private val router: Router<MapStatisticsDestination, Component> = router(
+    private val router: Router<MapStatisticsDestination, CustomComponentContext> = router(
         initialConfiguration = MapStatisticsDestination.MapStatistics,
         handleBackButton = true,
+        setNavigationResultAndNavigateUp = ::handleChildNavigationResult,
         childFactory = { destination, componentContext ->
             when (destination) {
-                MapStatisticsDestination.MapStatistics -> MapStatisticsComponentImpl(componentContext)
+                MapStatisticsDestination.MapStatistics -> MapStatisticsComponent(componentContext)
             }
         }
     )
 
-    override val routerState: Value<RouterState<MapStatisticsDestination, Component>> = router.state
+    private fun handleChildNavigationResult(args: Map<String, Any>) {
 
-    override fun navigateToScreen(destination: MapStatisticsDestination) {
+    }
+    
+    val routerState = router.state
+
+    fun navigateToScreen(destination: MapStatisticsDestination) {
         router.navigate { list ->
             list + destination
         }
     }
 
-    override fun navigateUp() {
+    fun navigateUp() {
         router.pop()
     }
 

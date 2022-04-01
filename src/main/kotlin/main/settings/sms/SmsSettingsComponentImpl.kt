@@ -1,7 +1,7 @@
 package main.settings.sms
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class SmsSettingsComponentImpl(
-    componentContext: ComponentContext,
-) : SmsSettingsComponent, ComponentContext by componentContext
+class SmsSettingsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

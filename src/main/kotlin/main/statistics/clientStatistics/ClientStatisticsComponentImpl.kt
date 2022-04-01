@@ -1,7 +1,7 @@
 package main.statistics.clientStatistics
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class ClientStatisticsComponentImpl(
-    componentContext: ComponentContext,
-) : ClientStatisticsComponent, ComponentContext by componentContext
+class ClientStatisticsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

@@ -1,7 +1,7 @@
 package main.help.feedback
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class FeedbackComponentImpl(
-    componentContext: ComponentContext,
-) : FeedbackComponent, ComponentContext by componentContext
+class FeedbackComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

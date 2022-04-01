@@ -1,6 +1,7 @@
 package core
 
 class NavigationResult(
+    val args: Map<String, Any>,
     private var consumed: Boolean = false
 ) {
     fun isConsumed(): Boolean {
@@ -14,5 +15,5 @@ class NavigationResult(
 }
 
 fun NavigationResult?.isNotConsumed(): Boolean {
-    return this?.isConsumed() ?: false
+    return this?.isConsumed()?.not() ?: false
 }

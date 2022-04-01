@@ -1,7 +1,7 @@
 package main.service.services
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class ServicesComponentImpl(
-    componentContext: ComponentContext,
-) : ServicesComponent, ComponentContext by componentContext
+class ServicesComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

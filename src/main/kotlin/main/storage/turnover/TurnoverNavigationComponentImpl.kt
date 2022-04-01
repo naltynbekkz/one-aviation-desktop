@@ -1,36 +1,41 @@
 package main.storage.turnover
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import com.arkivanov.decompose.router.Router
 import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.router.pop
-import com.arkivanov.decompose.router.router
+import core.router
 import com.arkivanov.decompose.value.Value
 import core.Component
 
-class TurnoverNavigationComponentImpl(
-    componentContext: ComponentContext,
-) : TurnoverNavigationComponent, ComponentContext by componentContext {
+class TurnoverNavigationComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext {
 
-    private val router: Router<TurnoverDestination, Component> = router(
+    private val router: Router<TurnoverDestination, CustomComponentContext> = router(
         initialConfiguration = TurnoverDestination.Turnover,
         handleBackButton = true,
+        setNavigationResultAndNavigateUp = ::handleChildNavigationResult,
         childFactory = { destination, componentContext ->
             when (destination) {
-                TurnoverDestination.Turnover -> TurnoverComponentImpl(componentContext)
+                TurnoverDestination.Turnover -> TurnoverComponent(componentContext)
             }
         }
     )
 
-    override val routerState: Value<RouterState<TurnoverDestination, Component>> = router.state
+    private fun handleChildNavigationResult(args: Map<String, Any>) {
 
-    override fun navigateToScreen(destination: TurnoverDestination) {
+    }
+    
+    val routerState = router.state
+
+    fun navigateToScreen(destination: TurnoverDestination) {
         router.navigate { list ->
             list + destination
         }
     }
 
-    override fun navigateUp() {
+    fun navigateUp() {
         router.pop()
     }
 

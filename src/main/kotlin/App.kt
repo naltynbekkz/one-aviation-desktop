@@ -13,9 +13,10 @@ import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.lifecycle.LifecycleController
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
+import core.DefaultCustomComponentContext
 import main.MainSettings
 import network.RepositoryProviderImpl
-import root.RootComponentImpl
+import root.RootComponent
 import root.RootContent
 import settings.SettingsProviderImpl
 import settings.get
@@ -42,10 +43,10 @@ fun main() {
     val repositoryProviderImpl = RepositoryProviderImpl("apiKey", 1, settingsProviderImpl.get())
 
     val lifecycle = LifecycleRegistry()
-    val root = RootComponentImpl(
+    val root = RootComponent(
         repositoryProviderImpl,
         settingsProviderImpl,
-        DefaultComponentContext(lifecycle),
+        DefaultCustomComponentContext(DefaultComponentContext(lifecycle)) { },
     )
 
     application {

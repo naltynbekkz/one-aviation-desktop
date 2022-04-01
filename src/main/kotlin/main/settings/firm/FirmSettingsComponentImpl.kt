@@ -1,7 +1,7 @@
 package main.settings.firm
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class FirmSettingsComponentImpl(
-    componentContext: ComponentContext,
-) : FirmSettingsComponent, ComponentContext by componentContext
+class FirmSettingsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

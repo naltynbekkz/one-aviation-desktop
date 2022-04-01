@@ -1,8 +1,8 @@
 package main.settings.actions
 
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class ActionsComponentImpl(
-    componentContext: ComponentContext,
-) : ActionsComponent, ComponentContext by componentContext
+class ActionsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

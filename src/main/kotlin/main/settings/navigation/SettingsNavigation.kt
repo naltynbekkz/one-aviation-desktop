@@ -23,7 +23,7 @@ import main.settings.logs.LogsSettingsComponent
 import main.settings.logs.LogsSettingsScreen
 import main.settings.permissions.PermissionsSettingsComponent
 import main.settings.permissions.PermissionsSettingsScreen
-import main.settings.settings.SettingsComponentImpl
+import main.settings.settings.SettingsComponent
 import main.settings.settings.SettingsScreen
 import main.settings.sms.SmsSettingsComponent
 import main.settings.sms.SmsSettingsScreen
@@ -41,7 +41,7 @@ fun SettingsNavigation(component: SettingsNavigationComponent) {
     Box(modifier = Modifier.fillMaxSize()) {
         Children(routerState = routerState, animation = slideFade()) {
             when (val child = it.instance) {
-                is SettingsComponentImpl -> SettingsScreen(child, component::navigateToScreen)
+                is SettingsComponent -> SettingsScreen(child, component::navigateToScreen)
                 is ActionsComponent -> ActionsScreen(child, component::navigateUp)
                 is BillingComponent -> BillingScreen(child, component::navigateUp)
                 is DealsComponent -> DealsScreen(child, component::navigateUp)

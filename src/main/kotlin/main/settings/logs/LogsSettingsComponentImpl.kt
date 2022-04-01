@@ -1,7 +1,7 @@
 package main.settings.logs
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class LogsSettingsComponentImpl(
-    componentContext: ComponentContext,
-) : LogsSettingsComponent, ComponentContext by componentContext
+class LogsSettingsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

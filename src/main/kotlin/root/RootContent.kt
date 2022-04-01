@@ -20,11 +20,7 @@ fun RootContent(root: RootComponent, modifier: Modifier = Modifier) {
     val token by root.refreshToken.collectAsState()
 
     LaunchedEffect(token) {
-        if (token == null) {
-            root.navigateToAuth()
-        } else {
-            root.navigateToMain()
-        }
+        root.navigate(if (token == null) RootDestination.Auth else RootDestination.Main)
     }
 
     Children(routerState = root.routerState, animation = crossfadeScale()) {

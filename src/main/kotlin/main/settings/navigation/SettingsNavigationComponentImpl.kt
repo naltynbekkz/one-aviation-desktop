@@ -1,62 +1,67 @@
 package main.settings.navigation
 
-import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.Router
 import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.router.pop
-import com.arkivanov.decompose.router.router
 import com.arkivanov.decompose.value.Value
-import core.Component
-import main.settings.actions.ActionsComponentImpl
-import main.settings.billing.BillingComponentImpl
-import main.settings.deals.DealsComponentImpl
-import main.settings.discounts.DiscountSettingsComponentImpl
-import main.settings.firm.FirmSettingsComponentImpl
-import main.settings.logs.LogsSettingsComponentImpl
-import main.settings.permissions.PermissionsSettingsComponentImpl
-import main.settings.settings.SettingsComponentImpl
-import main.settings.sms.SmsSettingsComponentImpl
-import main.settings.sources.SourcesSettingsComponentImpl
-import main.settings.workplaces.WorkplacesSettingsComponentImpl
+import core.CustomComponentContext
+import core.router
+import main.settings.actions.ActionsComponent
+import main.settings.billing.BillingComponent
+import main.settings.deals.DealsComponent
+import main.settings.discounts.DiscountSettingsComponent
+import main.settings.firm.FirmSettingsComponent
+import main.settings.logs.LogsSettingsComponent
+import main.settings.permissions.PermissionsSettingsComponent
+import main.settings.settings.SettingsComponent
+import main.settings.sms.SmsSettingsComponent
+import main.settings.sources.SourcesSettingsComponent
+import main.settings.workplaces.WorkplacesSettingsComponent
 import settings.SettingsProvider
 import settings.get
 
-class SettingsNavigationComponentImpl(
-    componentContext: ComponentContext,
+class SettingsNavigationComponent(
+    customComponentContext: CustomComponentContext,
     private val settingsProvider: SettingsProvider,
-) : SettingsNavigationComponent, ComponentContext by componentContext {
+) : CustomComponentContext by customComponentContext {
 
-    private val router: Router<SettingsDestination, ComponentContext> = router(
+    private val router: Router<SettingsDestination, CustomComponentContext> = router(
         initialConfiguration = SettingsDestination.Settings,
         handleBackButton = true,
+        setNavigationResultAndNavigateUp = ::handleChildNavigationResult,
         childFactory = { destination, componentContext ->
             when (destination) {
-                SettingsDestination.Settings -> SettingsComponentImpl(componentContext, settingsProvider.get())
-                SettingsDestination.Actions -> ActionsComponentImpl(componentContext)
-                SettingsDestination.Billing -> BillingComponentImpl(componentContext)
-                SettingsDestination.Deals -> DealsComponentImpl(componentContext)
-                SettingsDestination.DiscountSettings -> DiscountSettingsComponentImpl(componentContext)
-                SettingsDestination.FirmSettings -> FirmSettingsComponentImpl(componentContext)
-                SettingsDestination.LogsSettings -> LogsSettingsComponentImpl(componentContext)
-                SettingsDestination.PermissionsSettings -> PermissionsSettingsComponentImpl(componentContext)
-                SettingsDestination.SmsSettings -> SmsSettingsComponentImpl(componentContext)
-                SettingsDestination.SourcesSettings -> SourcesSettingsComponentImpl(componentContext)
-                SettingsDestination.WorkplacesSettings -> WorkplacesSettingsComponentImpl(componentContext)
+                SettingsDestination.Settings -> SettingsComponent(componentContext, settingsProvider.get())
+                SettingsDestination.Actions -> ActionsComponent(componentContext)
+                SettingsDestination.Billing -> BillingComponent(componentContext)
+                SettingsDestination.Deals -> DealsComponent(componentContext)
+                SettingsDestination.DiscountSettings -> DiscountSettingsComponent(componentContext)
+                SettingsDestination.FirmSettings -> FirmSettingsComponent(componentContext)
+                SettingsDestination.LogsSettings -> LogsSettingsComponent(componentContext)
+                SettingsDestination.PermissionsSettings -> PermissionsSettingsComponent(componentContext)
+                SettingsDestination.SmsSettings -> SmsSettingsComponent(componentContext)
+                SettingsDestination.SourcesSettings -> SourcesSettingsComponent(componentContext)
+                SettingsDestination.WorkplacesSettings -> WorkplacesSettingsComponent(componentContext)
             }
         }
     )
 
-    override val routerState: Value<RouterState<SettingsDestination, ComponentContext>> = router.state
+    private fun handleChildNavigationResult(args: Map<String, Any>) {
+        router.pop()
+        routerState.value.activeChild.instance.onNavigationResult(args)
+    }
 
-    override fun navigateToScreen(destination: SettingsDestination) {
+    val routerState: Value<RouterState<SettingsDestination, CustomComponentContext>> = router.state
+
+    fun navigateToScreen(destination: SettingsDestination) {
         router.navigate { list ->
             list + destination
         }
     }
 
-    override fun navigateUp() {
+    fun navigateUp() {
         router.pop()
-        routerState.value.activeChild.instance.
+//        routerState.value.activeChild.instance.onNavigationResult()
     }
 
 }

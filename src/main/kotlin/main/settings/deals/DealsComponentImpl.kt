@@ -1,7 +1,7 @@
 package main.settings.deals
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class DealsComponentImpl(
-    componentContext: ComponentContext,
-) : DealsComponent, ComponentContext by componentContext
+class DealsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

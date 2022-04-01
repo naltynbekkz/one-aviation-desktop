@@ -1,9 +1,10 @@
 package auth.forgotPassword
 
-import core.Component
+import core.CustomComponentContext
 
-interface ForgotPasswordComponent : Component {
-
+class ForgotPasswordComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext {
 
 
 }

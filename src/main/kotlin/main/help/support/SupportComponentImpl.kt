@@ -1,7 +1,7 @@
 package main.help.support
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class SupportComponentImpl(
-    componentContext: ComponentContext,
-) : SupportComponent, ComponentContext by componentContext
+class SupportComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

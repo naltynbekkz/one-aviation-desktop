@@ -1,16 +1,16 @@
 package main.settings.settings
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import core.NavigationResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import main.MainSettings
 import main.MainTab
 
-class SettingsComponentImpl(
-    componentContext: ComponentContext,
+class SettingsComponent(
+    customComponentContext: CustomComponentContext,
     private val mainSettings: MainSettings,
-) : ComponentContext by componentContext {
+) : CustomComponentContext by customComponentContext {
 
     val nightMode: StateFlow<Boolean> = mainSettings.nightMode
 
@@ -22,7 +22,5 @@ class SettingsComponentImpl(
     fun setStartupScreen(value: MainTab) {
         mainSettings.setStartupScreen(value)
     }
-
-    val navigationResult = MutableStateFlow<NavigationResult?>(null)
 
 }

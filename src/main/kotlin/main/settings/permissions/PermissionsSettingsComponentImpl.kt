@@ -1,7 +1,7 @@
 package main.settings.permissions
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class PermissionsSettingsComponentImpl(
-    componentContext: ComponentContext,
-) : PermissionsSettingsComponent, ComponentContext by componentContext
+class PermissionsSettingsComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext

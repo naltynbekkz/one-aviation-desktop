@@ -1,38 +1,40 @@
 package main.statistics.reservationStatistics
 
-import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.Router
-import com.arkivanov.decompose.router.RouterState
 import com.arkivanov.decompose.router.pop
-import com.arkivanov.decompose.router.router
-import com.arkivanov.decompose.value.Value
-import core.Component
+import core.CustomComponentContext
+import core.router
 
-class ReservationStatisticsNavigationComponentImpl(
-    componentContext: ComponentContext,
-) : ReservationStatisticsNavigationComponent, ComponentContext by componentContext {
+class ReservationStatisticsNavigationComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext {
 
-    private val router: Router<ReservationStatisticsDestination, Component> = router(
+    private val router: Router<ReservationStatisticsDestination, CustomComponentContext> = router(
         initialConfiguration = ReservationStatisticsDestination.ReservationStatistics,
         handleBackButton = true,
+        setNavigationResultAndNavigateUp = ::handleChildNavigationResult,
         childFactory = { destination, componentContext ->
             when (destination) {
-                ReservationStatisticsDestination.ReservationStatistics -> ReservationStatisticsComponentImpl(
+                ReservationStatisticsDestination.ReservationStatistics -> ReservationStatisticsComponent(
                     componentContext
                 )
             }
         }
     )
 
-    override val routerState: Value<RouterState<ReservationStatisticsDestination, Component>> = router.state
+    private fun handleChildNavigationResult(args: Map<String, Any>) {
 
-    override fun navigateToScreen(destination: ReservationStatisticsDestination) {
+    }
+
+    val routerState = router.state
+
+    fun navigateToScreen(destination: ReservationStatisticsDestination) {
         router.navigate { list ->
             list + destination
         }
     }
 
-    override fun navigateUp() {
+    fun navigateUp() {
         router.pop()
     }
 

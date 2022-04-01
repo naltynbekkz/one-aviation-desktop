@@ -1,15 +1,15 @@
 package main.staff.admins.admins
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import core.Interactor.Companion.getInteractor
 import main.staff.admins.AdminRepository
 
-class AdminsComponentImpl(
-    componentContext: ComponentContext,
+class AdminsComponent(
+    customComponentContext: CustomComponentContext,
     repository: AdminRepository,
-) : AdminsComponent, ComponentContext by componentContext {
+) : CustomComponentContext by customComponentContext {
 
-    override val admins = getInteractor {
+    val admins = getInteractor {
         repository.getAdmins()
     }
 

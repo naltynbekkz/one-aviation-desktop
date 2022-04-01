@@ -1,14 +1,14 @@
 package main.statistics.sources
 
 import androidx.compose.ui.graphics.Color
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 import main.statistics.compose.LineChartEntry
 
-class SourcesComponentImpl(
-    componentContext: ComponentContext,
-) : SourcesComponent, ComponentContext by componentContext {
+class SourcesComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext {
 
-    override val entries = listOf(
+    val entries = listOf(
         LineChartEntry(
             label = "рекомендации",
             Color(red = 111, green = 143, blue = 197),

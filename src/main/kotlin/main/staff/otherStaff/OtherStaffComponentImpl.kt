@@ -1,7 +1,7 @@
 package main.staff.otherStaff
 
-import com.arkivanov.decompose.ComponentContext
+import core.CustomComponentContext
 
-class OtherStaffComponentImpl(
-    componentContext: ComponentContext,
-) : OtherStaffComponent, ComponentContext by componentContext
+class OtherStaffComponent(
+    customComponentContext: CustomComponentContext,
+) : CustomComponentContext by customComponentContext
