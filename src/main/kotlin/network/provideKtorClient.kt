@@ -47,7 +47,7 @@ private fun getHttpClient(
         defaultRequest {
 
             url.protocol = URLProtocol.HTTP
-            host = "192.168.183.253:8080"
+            host = "192.168.0.190:8080"
 
             header("api_key", apiKey)
             header("referrer", "desktop")

@@ -28,6 +28,7 @@ class LogsNavigationComponent(
                     customComponentContext = componentContext,
                     id = destination.id,
                     repository = repositoryProvider.get(),
+                    ticketsRepository = repositoryProvider.get(),
                 )
             }
         }

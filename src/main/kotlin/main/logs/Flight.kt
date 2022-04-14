@@ -2,6 +2,7 @@ package main.logs
 
 import core.Timestamp
 import kotlinx.serialization.Serializable
+import main.logs.reservation.Ticket
 import main.staff.masters.data.Plane
 
 @Serializable
@@ -13,4 +14,5 @@ data class Flight(
     val arrival: Location,
     val status: FlightStatus,
     val passengerCount: Int,
+    val tickets: List<Ticket>
 )

@@ -16,6 +16,7 @@ class RepositoryProviderImpl(
         ProfileRepositoryImpl(),
         PlanesRepositoryImpl(),
         FlightsRepositoryImpl(),
+        TicketsRepositoryImpl(),
         AdminRepositoryImpl(),
     ).onEach {
         it.client = httpClient

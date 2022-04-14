@@ -143,8 +143,7 @@ fun LogItem(
 ) {
 
     val backgroundColor = when (flight.status) {
-        FlightStatus.BOOKING -> error("this shouldn't be here")
-        FlightStatus.CREATED -> Color.Yellow
+        FlightStatus.BOOKING -> Color.Yellow
         FlightStatus.SERVED -> MaterialTheme.colors.secondary
         FlightStatus.CANCELLED -> Color.Red
     }
@@ -173,7 +172,7 @@ fun LogItem(
                             }
                     )
                 }
-                if (flight.status != FlightStatus.CREATED) {
+                if (flight.status != FlightStatus.BOOKING) {
                     Box(
                         modifier = Modifier
                             .padding(2.dp)
@@ -183,7 +182,7 @@ fun LogItem(
                                 shape = CircleShape,
                             )
                             .clickable {
-                                setStatus(FlightStatus.CREATED)
+                                setStatus(FlightStatus.BOOKING)
                             }
                     )
                 }

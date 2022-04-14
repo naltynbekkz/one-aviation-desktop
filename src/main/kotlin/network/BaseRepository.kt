@@ -88,7 +88,7 @@ abstract class BaseRepository(val basePath: String = "") {
         }
     }
 
-    suspend inline fun <reified T> put(path: String, body: Any) = request<T> {
+    suspend inline fun <reified T> put(path: String, body: Any?) = request<T> {
         client.put {
             url {
                 path("$basePath$path")

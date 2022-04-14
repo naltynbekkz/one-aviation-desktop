@@ -1,17 +1,20 @@
 package main.logs.reservation
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import core.DateUtils
@@ -111,6 +114,70 @@ fun ReservationScreen(
                     label = { Text("Status") },
                     enabled = isEdit
                 )
+
+                Text(
+                    text = "Tickets", modifier = Modifier.padding(16.dp), fontSize = 24.sp
+                )
+
+                flight.tickets.forEach { ticket ->
+                    Card(
+                        modifier = Modifier.padding(vertical = 4.dp),
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(8.dp).width(256.dp),
+                            verticalArrangement = Arrangement.spacedBy(4.dp),
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Text("Ticket#${ticket.id}")
+                                Spacer(modifier = Modifier.weight(1f))
+                                if (ticket.timestamp.deleted == null) {
+                                    Box(
+                                        modifier = Modifier
+                                            .padding(2.dp)
+                                            .size(16.dp)
+                                            .background(
+                                                color = Color.Red,
+                                                shape = CircleShape,
+                                            )
+                                            .clickable {
+                                                component.cancelTicket.initialFetch(ticket.id)
+                                            }
+                                    )
+                                } else {
+                                    Box(
+                                        modifier = Modifier
+                                            .padding(2.dp)
+                                            .size(16.dp)
+                                            .background(
+                                                color = MaterialTheme.colors.secondary,
+                                                shape = CircleShape,
+                                            )
+                                            .clickable {
+                                                component.uncancelTicket.initialFetch(ticket.id)
+                                            }
+                                    )
+                                }
+                            }
+                            Text("Passenger", color = Color.Gray)
+                            Text(ticket.passenger.fullName())
+                            Text("Document Id: ${ticket.passenger.documentId}")
+                            Text(buildAnnotatedString {
+                                append("Status: ")
+                                if (ticket.timestamp.deleted == null) {
+                                    withStyle(SpanStyle(MaterialTheme.colors.secondary)) {
+                                        append("ACTIVE")
+                                    }
+                                } else {
+                                    withStyle(SpanStyle(Color.Red)) {
+                                        append("CANCELLED")
+                                    }
+                                }
+                            })
+                        }
+                    }
+                }
             }
         }
     }
