@@ -9,6 +9,14 @@ import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import core.slideFade
+import main.help.feedback.FeedbackComponent
+import main.help.feedback.FeedbackScreen
+import main.home.HomeComponent
+import main.home.HomeScreen
+import main.logs.logs.LogsComponent
+import main.logs.logs.LogsScreen
+import main.settings.SettingsComponent
+import main.settings.SettingsScreen
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable

@@ -1,20 +1,27 @@
 package main.settings
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.toSize
+import main.allTabs
 
 @OptIn(
     ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class, ExperimentalUnitApi::class,
@@ -150,59 +157,67 @@ fun SettingsScreen(
                     }
                 }
             }
+        }
+    }
+}
 
 
-            /*val nightMode by settingsComponent.nightMode.collectAsState()
+@OptIn(
+    ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class, ExperimentalUnitApi::class,
+    ExperimentalMaterialApi::class
+)
+@Composable
+fun SettingsOld(settingsComponent: SettingsComponent) {
+    val nightMode by settingsComponent.nightMode.collectAsState()
 
-            Box(Modifier.fillMaxSize(), Alignment.Center) {
-                Column {
-                    var expanded by remember { mutableStateOf(false) }
+    Box(Modifier.fillMaxSize(), Alignment.Center) {
+        Column {
+            var expanded by remember { mutableStateOf(false) }
 
-                    val startupScreen by settingsComponent.startupScreen.collectAsState()
+            val startupScreen by settingsComponent.startupScreen.collectAsState()
 
-                    var textfieldSize by remember { mutableStateOf(Size.Zero) }
+            var textfieldSize by remember { mutableStateOf(Size.Zero) }
 
 
-                    Column {
-                        OutlinedTextField(
-                            value = startupScreen.title,
-                            onValueChange = { },
-                            modifier = Modifier
-                                .onGloballyPositioned { coordinates ->
-                                    //This value is used to assign to the DropDown the same width
-                                    textfieldSize = coordinates.size.toSize()
-                                },
-                            label = { Text("Startup screen") },
-                            readOnly = true,
-                            trailingIcon = {
-                                Icon(Icons.Filled.ArrowDropDown, "contentDescription",
-                                    Modifier.clickable { expanded = !expanded })
-                            }
-                        )
-                        DropdownMenu(
-                            expanded = expanded,
-                            onDismissRequest = { expanded = false },
-                            modifier = Modifier
-                                .width(with(LocalDensity.current) { textfieldSize.width.toDp() })
-                        ) {
-                            allTabs.forEach { label ->
-                                DropdownMenuItem(onClick = {
-                                    settingsComponent.setStartupScreen(label)
-                                    expanded = false
-                                }) {
-                                    Text(text = label.title)
-                                }
-                            }
+            Column {
+                OutlinedTextField(
+                    value = startupScreen.title,
+                    onValueChange = { },
+                    modifier = Modifier
+                        .onGloballyPositioned { coordinates ->
+                            //This value is used to assign to the DropDown the same width
+                            textfieldSize = coordinates.size.toSize()
+                        },
+                    label = { Text("Startup screen") },
+                    readOnly = true,
+                    trailingIcon = {
+                        Icon(
+                            Icons.Filled.ArrowDropDown, "contentDescription",
+                            Modifier.clickable { expanded = !expanded })
+                    }
+                )
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false },
+                    modifier = Modifier
+                        .width(with(LocalDensity.current) { textfieldSize.width.toDp() })
+                ) {
+                    allTabs.forEach { label ->
+                        DropdownMenuItem(onClick = {
+                            settingsComponent.setStartupScreen(label)
+                            expanded = false
+                        }) {
+                            Text(text = label.title)
                         }
                     }
-
-                    Button({
-                        settingsComponent.setNightMode(!nightMode)
-                    }) {
-                        Text(if (nightMode) "Night" else "Day")
-                    }
                 }
-            }*/
+            }
+
+            Button({
+                settingsComponent.setNightMode(!nightMode)
+            }) {
+                Text(if (nightMode) "Night" else "Day")
+            }
         }
     }
 }
