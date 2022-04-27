@@ -11,6 +11,8 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import core.slideFade
 import main.logs.logs.LogsComponent
 import main.logs.logs.LogsScreen
+import main.logs.newReservation.NewReservationComponent
+import main.logs.newReservation.NewReservationScreen
 import main.logs.reservation.ReservationComponent
 import main.logs.reservation.ReservationScreen
 
@@ -23,10 +25,17 @@ fun LogsNavigation(component: LogsNavigationComponent) {
     Box(modifier = Modifier.fillMaxSize()) {
         Children(routerState = routerState, animation = slideFade()) {
             when (val child = it.instance) {
-                is LogsComponent -> LogsScreen(child) { id ->
-                    component.navigateToScreen(LogsDestination.Reservation(id))
-                }
+                is LogsComponent -> LogsScreen(
+                    component = child,
+                    goToReservation = { id ->
+                        component.navigateToScreen(LogsDestination.Reservation(id))
+                    },
+                    makeAReservation = { calendar ->
+                        component.navigateToScreen(LogsDestination.NewReservation(calendar))
+                    },
+                )
                 is ReservationComponent -> ReservationScreen(child, component::navigateUp)
+                is NewReservationComponent -> NewReservationScreen(child, component::navigateUp)
             }
         }
     }

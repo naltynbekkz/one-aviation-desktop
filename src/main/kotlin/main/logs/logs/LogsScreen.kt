@@ -11,9 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -30,12 +28,14 @@ import core.ResponseComponent
 import main.logs.Flight
 import main.logs.FlightStatus
 import theme.gray600
+import java.util.Calendar
 import kotlin.time.Duration.Companion.hours
 
 @Composable
 fun LogsScreen(
     component: LogsComponent,
     goToReservation: (Long) -> Unit,
+    makeAReservation: (Calendar) -> Unit,
 ) {
 
     val verticalScrollState = rememberScrollState()

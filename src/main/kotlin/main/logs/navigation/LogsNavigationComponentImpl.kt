@@ -5,6 +5,7 @@ import com.arkivanov.decompose.router.pop
 import core.CustomComponentContext
 import core.router
 import main.logs.logs.LogsComponent
+import main.logs.newReservation.NewReservationComponent
 import main.logs.reservation.ReservationComponent
 import network.RepositoryProvider
 import network.get
@@ -29,6 +30,10 @@ class LogsNavigationComponent(
                     id = destination.id,
                     repository = repositoryProvider.get(),
                     ticketsRepository = repositoryProvider.get(),
+                )
+                is LogsDestination.NewReservation -> NewReservationComponent(
+                    customComponentContext = componentContext,
+                    repository = repositoryProvider.get(),
                 )
             }
         }
