@@ -6,6 +6,7 @@ import main.logs.FlightsRepository
 import main.logs.UpdateFlightRequest
 import main.logs.logs.LogsResponse
 import main.logs.newReservation.NewReservationScreenData
+import main.staff.masters.data.Plane
 import network.BaseRepository
 import network.ResponseState
 
@@ -21,4 +22,7 @@ class FlightsRepositoryImpl : BaseRepository("flights"), FlightsRepository {
 
     override suspend fun getNewReservationScreenData() =
         get<NewReservationScreenData>("/new")
+
+    override suspend fun changePlane(flightId: Int, plane: Plane) =
+        put<Unit>("/change-plane/${flightId}", plane)
 }

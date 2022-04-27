@@ -5,17 +5,24 @@ import core.Interactor.Companion.getInteractor
 import core.NullableInteractor.Companion.getNullableInteractor
 import main.logs.FlightsRepository
 import main.logs.TicketsRepository
+import main.staff.masters.PlanesRepository
+import main.staff.masters.data.Plane
 import network.ResponseState
 
 class ReservationComponent(
     customComponentContext: CustomComponentContext,
     private val id: Long,
     repository: FlightsRepository,
+    planesRepository: PlanesRepository,
     ticketsRepository: TicketsRepository,
 ) : CustomComponentContext by customComponentContext {
 
     val flight = getInteractor {
         repository.getFlight(id)
+    }
+
+    val changePlane = getNullableInteractor { plane: Plane ->
+        repository.changePlane(id.toInt(), plane)
     }
 
     val cancelTicket = getNullableInteractor { id: Int ->
@@ -33,6 +40,10 @@ class ReservationComponent(
         }
         response
 
+    }
+
+    val planes = getInteractor {
+        planesRepository.getPlanes()
     }
 
 }

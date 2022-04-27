@@ -1,5 +1,6 @@
 package main.logs.reservation
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -22,9 +23,11 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
+import com.sun.net.httpserver.Authenticator.Success
 import core.DateUtils
 import core.ResponseComponent
 import main.allTabs
+import network.ResponseState
 
 @Composable
 fun ReservationScreen(
@@ -66,12 +69,14 @@ fun ReservationScreen(
             var arrival by remember { mutableStateOf(flight.arrival.address) }
             var departure by remember { mutableStateOf(flight.departure.location.address) }
             var status by remember { mutableStateOf(flight.status.name) }
-            var plane by remember { mutableStateOf(flight.plane.name) }
+            var plane by remember { mutableStateOf(flight.plane) }
 
             var isEdit by remember { mutableStateOf(false) }
 
             var textfieldSize by remember { mutableStateOf(Size.Zero) }
             var expanded by remember { mutableStateOf(false) }
+
+            val planes = component.planes.response.collectAsState()
 
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -108,35 +113,40 @@ fun ReservationScreen(
                     enabled = isEdit
                 )
 
-                OutlinedTextField(
-                    value = plane,
-                    onValueChange = { plane = it },
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).wrapContentWidth()
-                        .onGloballyPositioned { coordinates ->
-                            //This value is used to assign to the DropDown the same width
-                            textfieldSize = coordinates.size.toSize()
-                        },
-                    label = { Text("Plane") },
-                    readOnly = true,
-                    trailingIcon = {
-                        Icon(Icons.Filled.ArrowDropDown, "contentDescription",
-                            Modifier.clickable {  })
-                    }
-                )
+                Column {
+                    OutlinedTextField(
+                        value = plane.name,
+                        onValueChange = {  },
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).wrapContentWidth()
+                            .onGloballyPositioned { coordinates ->
+                                //This value is used to assign to the DropDown the same width
+                                textfieldSize = coordinates.size.toSize()
+                            },
+                        label = { Text("Plane") },
+                        readOnly = true,
+                        trailingIcon = {
+                            Icon(Icons.Filled.ArrowDropDown, "contentDescription",
+                                Modifier.clickable {
+                                    expanded = true
+                                })
+                        }
+                    )
 
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false },
-                    modifier = Modifier
-                        .width(with(LocalDensity.current) { textfieldSize.width.toDp() })
-                ) {
-//                    allTabs.forEach { label ->
-//                        DropdownMenuItem(onClick = {
-//                            expanded = false
-//                        }) {
-//                            Text(text = label.title)
-//                        }
-//                    }
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false },
+                        modifier = Modifier
+                            .width(with(LocalDensity.current) { textfieldSize.width.toDp() })
+                    ) {
+                        (planes.value as? ResponseState.NetworkResponse.Success)?.data?.forEach {
+                            DropdownMenuItem(onClick = {
+                                expanded = false
+                                plane = it
+                            }) {
+                                Text(text = it.name)
+                            }
+                        }
+                    }
                 }
 
                 OutlinedTextField(
@@ -146,6 +156,18 @@ fun ReservationScreen(
                     label = { Text("Status") },
                     enabled = isEdit
                 )
+
+                AnimatedVisibility(flight.plane != plane) {
+                    Button(
+                        onClick = {
+                            component.changePlane.initialFetch(plane)
+                        },
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                        content = {
+                            Text("Save")
+                        }
+                    )
+                }
 
                 Text(
                     text = "Tickets", modifier = Modifier.padding(16.dp), fontSize = 24.sp

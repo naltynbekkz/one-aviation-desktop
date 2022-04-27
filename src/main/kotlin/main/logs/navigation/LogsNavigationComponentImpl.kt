@@ -29,6 +29,7 @@ class LogsNavigationComponent(
                     customComponentContext = componentContext,
                     id = destination.id,
                     repository = repositoryProvider.get(),
+                    planesRepository = repositoryProvider.get(),
                     ticketsRepository = repositoryProvider.get(),
                 )
                 is LogsDestination.NewReservation -> NewReservationComponent(
