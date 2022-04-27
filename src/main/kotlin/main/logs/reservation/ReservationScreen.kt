@@ -7,18 +7,24 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.toSize
 import core.DateUtils
 import core.ResponseComponent
+import main.allTabs
 
 @Composable
 fun ReservationScreen(
@@ -64,6 +70,9 @@ fun ReservationScreen(
 
             var isEdit by remember { mutableStateOf(false) }
 
+            var textfieldSize by remember { mutableStateOf(Size.Zero) }
+            var expanded by remember { mutableStateOf(false) }
+
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -102,10 +111,33 @@ fun ReservationScreen(
                 OutlinedTextField(
                     value = plane,
                     onValueChange = { plane = it },
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).wrapContentWidth(),
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).wrapContentWidth()
+                        .onGloballyPositioned { coordinates ->
+                            //This value is used to assign to the DropDown the same width
+                            textfieldSize = coordinates.size.toSize()
+                        },
                     label = { Text("Plane") },
-                    enabled = isEdit
+                    readOnly = true,
+                    trailingIcon = {
+                        Icon(Icons.Filled.ArrowDropDown, "contentDescription",
+                            Modifier.clickable {  })
+                    }
                 )
+
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false },
+                    modifier = Modifier
+                        .width(with(LocalDensity.current) { textfieldSize.width.toDp() })
+                ) {
+//                    allTabs.forEach { label ->
+//                        DropdownMenuItem(onClick = {
+//                            expanded = false
+//                        }) {
+//                            Text(text = label.title)
+//                        }
+//                    }
+                }
 
                 OutlinedTextField(
                     value = status,
